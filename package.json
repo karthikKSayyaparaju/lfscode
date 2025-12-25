@@ -1,8 +1,12 @@
 {
-  "name": "lfscode",
+  "name": "my-static-site",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Simple static site host",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.1"
   }
 }

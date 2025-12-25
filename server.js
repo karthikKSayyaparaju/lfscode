@@ -66,6 +66,13 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "login", "login.html"));
 });
 
+app.get("/logout", (req, res, next) => {
+  req.logout(err => {
+    if (err) return next(err);
+    res.redirect("/index.html");
+  });
+});
+
 // Start Google OAuth
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 

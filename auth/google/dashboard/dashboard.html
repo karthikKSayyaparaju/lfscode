@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard – LearnFromScratch</title>
+
+  <!-- Use your existing styles -->
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    /* Page-specific styles only */
+    body.dashboard-page {
+      min-height: 100vh;
+      background: #f8fafc;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: #0f172a;
+    }
+
+    .dashboard-card {
+      width: min(720px, 100%);
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 48px 36px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 12px 28px rgba(2, 6, 23, 0.12);
+    }
+
+    .dashboard-card h1 {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.02em;
+    }
+
+    .dashboard-card p {
+      margin: 16px auto 0;
+      max-width: 520px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #475569;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #065f46;
+      background: rgba(22, 163, 74, 0.12);
+    }
+
+    .actions {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .actions .btn {
+      min-width: 160px;
+    }
+
+    /* Small screens */
+    @media (max-width: 480px) {
+      .dashboard-card {
+        padding: 36px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body class="dashboard-page">
+  <main class="dashboard-card">
+    <h1>🚧 Site Under Construction</h1>
+
+    <p>
+      We’re currently building something awesome for <strong>LearnFromScratch</strong>.
+      Our dashboard and learning content will be available very soon.
+    </p>
+
+    <span class="badge">Launching shortly</span>
+
+    <div class="actions">
+      <a href="/" class="btn btn-outline">Back to Home</a>
+      <a href="/logout" class="btn btn-solid">Log out</a>
+    </div>
+  </main>
+</body>
+</html>

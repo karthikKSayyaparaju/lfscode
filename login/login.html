@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - LearnFromScratch</title>
+  <link rel="stylesheet" href="../styles.css" />
+  
+</head>
+
+<body class="login-page">
+  <main class="page">
+    <section class="card" aria-label="Login card">
+      <header class="header">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Login to Unlock new learning</h1>
+        <p>Log in to continue learning with <span>LearnFromScratch</span>.</p>
+      </header>
+
+      <form class="form" action="/login-password" method="POST" autocomplete="on">
+        <label class="field">
+          <span>Username</span>
+          <input type="text" name="username" placeholder="Enter your username" required />
+        </label>
+
+        <label class="field">
+          <span>Password</span>
+          <input type="password" name="password" placeholder="Enter your password" required />
+        </label>
+
+        <div class="row">
+          <label class="checkbox">
+            <input type="checkbox" name="remember" />
+            <span>Remember me</span>
+          </label>
+
+          <a class="link" href="/forgot-password">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Log in</button>
+      </form>
+
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <a href="/auth/google" class="btn btn-google" role="button" aria-label="Continue with Google">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo.svg"
+          width="18"
+          height="18"
+          alt="Google logo"
+        />
+        Continue with Google
+      </a>
+
+      <footer class="footer">
+        <p>New here? <a class="link" href="/signup">Create an account</a></p>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

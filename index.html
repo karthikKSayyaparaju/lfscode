@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Landing</title>
+
+  <!-- Open Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+
+  <body>
+    <!-- Top Nav -->
+    <header class="topbar">
+      <div class="container nav">
+        <a class="brand" href="#">
+          <span class="brand-name">LearnFromScratch</span>
+        </a>
+
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          ☰
+        </button>
+
+        <nav class="nav-links" id="navLinks">
+          <a href="#">Products</a>
+          <a href="#">Solutions</a>
+          <a href="#">Resources</a>
+          <a href="#">Pricing</a>
+          <a href="#">Human Data</a>
+        </nav>
+
+        <div class="nav-actions" id="navActions">
+          <a class="link" href="#">Log In</a>
+          <a class="btn btn-outline" href="#">Request Demo</a>
+          <a class="btn btn-solid" href="#">Create a free account</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main class="hero">
+      <div class="container hero-inner">
+        <h1 class="headline">
+          <span class="accent">Learn Python, DS, ML</span><span class="accent"></span> from
+          <br />
+          scratch with real-world data.
+        </h1>
+
+        <p class="subhead">
+          We help thousands of individuals learn Python, NumPy, Pandas, and Machine Learning from scratch through hands-on, real-world data.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-solid btn-lg" href="#">Start a free trial</a>
+          <a class="btn btn-outline btn-lg" href="#">For developers</a>
+        </div>
+
+        <div class="logos">
+          <span class="logo">airbnb</span>
+          <span class="logo">stripe</span>
+          <span class="logo">LinkedIn</span>
+          <span class="logo">ATLASSIAN</span>
+          <span class="logo">IBM</span>
+          <span class="logo">Snap Inc.</span>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

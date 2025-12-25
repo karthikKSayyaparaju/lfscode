@@ -1,0 +1,9 @@
+Step1: Started the git Repository - lfscode.
+Step2: Created 3 new files
+    - index.html
+    - script.js
+    - styles.css
+Step 3: Moved to the project folder and ran "python3 -m http.server 5500" to start the  https server.
+    - "Python -m" means run a module installed in python
+    - http.server is a built-in Python module
+  

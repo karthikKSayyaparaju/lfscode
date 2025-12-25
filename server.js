@@ -74,20 +74,18 @@ app.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
-    // ✅ MUST be absolute
-    return res.redirect("/dashboard");
+    // Redirect to the URL you want
+    return res.redirect("/auth/google/callback/dashboard/dashboard.html");
   }
 );
 
-// Dashboard route
-app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "dashboard", "dashboard.html"));
+// Serve the dashboard file for that URL (map it to your real file location)
+app.get("/auth/google/callback/dashboard/dashboard.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "auth", "google", "dashboard", "dashboard.html"));
 });
 
-// ✅ Safety: redirect any wrong dashboard file path
-app.get("/auth/google/dashboard/dashboard.html", (req, res) => {
-  res.redirect("/dashboard");
-});
+
+
 
 /* ==============
    5) Server

@@ -1,0 +1,82 @@
+What to build first (sequence that works)
+
+Phase 1: “Backend skeleton” (1–2 days)
+Create API project
+Health check endpoint /health
+Connect DB
+Migrations enabled
+
+Phase 2: Auth + user profile (1–2 days)
+Login handled by Entra External ID (or even temporary email/password with bcrypt locally)
+Backend middleware validates token
+Create user record on first login
+
+Phase 3: Problems (2–4 days)
+DB tables: problems, test_cases
+Admin endpoints to add problems
+Public endpoints to list/search problems
+
+Phase 4: Submissions (2–4 days)
+
+Endpoint: POST /problems/:id/submit
+Save submission row with status queued
+Call Judge service
+Update submission status (Accepted, Wrong Answer, TLE, Runtime Error)
+
+Phase 5: Leaderboard / history (later)
+
+User submission history
+Best-time per problem, etc.
+Minimal database schema (MVP)
+users
+id (uuid)
+external_id (sub/oid from auth)
+email, created_at
+problems
+id, title, difficulty, statement, constraints, created_at
+test_cases
+id, problem_id, input, expected_output, is_hidden
+submissions
+id, user_id, problem_id, language, code, status, stdout, stderr, created_at
+MVP judging flow (how it works)
+
+User submits code
+Backend fetches test cases for that problem
+Backend sends code + test input to Judge0 (or judge service)
+Compare output vs expected
+Store result + return response
+
+
+
+Where you should start today (no overthinking)
+
+Step 1: Choose your backend stack
+Pick one:
+FastAPI (Python) if you want fastest API dev
+Node + Express/NestJS if you want JS everywhere
+.NET if you want enterprise Azure-style
+
+Step 2: Run local DB + judge using Docker
+Postgres container
+Judge0 container (or alternative)
+
+Step 3: Build just 3 endpoints
+
+GET /problems
+GET /problems/:id
+POST /problems/:id/submit
+
+Quick question (so I can give you an exact starter repo structure + commands)
+
+Which backend do you want to start with?
+
+Python (FastAPI)
+Node.js (Express/NestJS)
+.NET Web API
+If you pick one, I’ll give you:
+folder structure
+docker-compose (DB + judge)
+minimal working submit endpoint
+Azure deployment path (App Service / Container Apps)
+
+ChatGPT can make mistakes. Check important info.

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearnFromScratch</title>
+
+  <!-- Open Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Your existing CSS (unchanged) -->
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Small extra CSS only for the courses scroller (does not change your bg color) -->
+  <style>
+    .section {
+      padding: 28px 0;
+    }
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 12px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+    }
+    .section p.sub {
+      margin: 0 0 16px;
+      opacity: 0.8;
+      font-weight: 600;
+    }
+
+    /* Horizontal scroller */
+    .course-row {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 320px);
+      gap: 14px;
+      overflow-x: auto;
+      padding: 8px 4px 14px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .course-row::-webkit-scrollbar {
+      height: 10px;
+    }
+    .course-row::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: rgba(0,0,0,0.18);
+    }
+
+    .course-card {
+      scroll-snap-align: start;
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 150px;
+    }
+
+    .course-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .course-title {
+      font-weight: 800;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .pill {
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.10);
+      background: rgba(0,0,0,0.04);
+      white-space: nowrap;
+    }
+
+    .course-desc {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.35;
+      opacity: .85;
+      font-weight: 600;
+    }
+
+    .course-actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mini-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      border: 1px solid rgba(0,0,0,0.10);
+      background: rgba(0,0,0,0.06);
+      color: inherit;
+      cursor: pointer;
+    }
+    .mini-btn.primary {
+      background: #0b1220;
+      color: white;
+      border-color: rgba(0,0,0,0.18);
+    }
+
+    /* Make sure hero doesn't feel empty */
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Nav -->
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#">
+        <span class="brand-name">LearnFromScratch</span>
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        ☰
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#">Problems</a>
+        <a href="#">Courses</a>
+        <a href="#">Resources</a>
+        <a href="#">Pricing</a>
+        <a href="#">Data Access</a>
+      </nav>
+
+      <div class="nav-actions" id="navActions">
+        <!-- ✅ Will be replaced by JS to "Logout" only when authenticated -->
+        <a class="link" id="authLink" href="/login">Log In</a>
+        <a class="btn btn-outline" href="#">Request Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main class="hero">
+    <div class="container hero-inner">
+      <div>
+        <h1 style="margin:0 0 10px; font-weight:800; letter-spacing:-0.4px;">
+          Welcome back 👋
+        </h1>
+        <p style="margin:0; font-weight:600; opacity:.85;">
+          Continue learning step-by-step. Pick a course and start solving.
+        </p>
+      </div>
+
+      <!-- ✅ Courses Scroller -->
+      <section class="section" aria-label="Courses">
+        <h2>Courses</h2>
+        <p class="sub">Swipe/scroll horizontally to explore.</p>
+
+        <div class="course-row" id="courseRow">
+          <!-- Filled by JS (but has fallback static cards too) -->
+          <div class="course-card">
+            <div class="course-top">
+              <h3 class="course-title">Basic Python</h3>
+              <span class="pill">Start</span>
+            </div>
+            <p class="course-desc">Syntax, loops, functions, I/O, and fundamentals with quick checks.</p>
+            <div class="course-actions">
+              <a class="mini-btn primary" href="#">Open</a>
+              <a class="mini-btn" href="#">Syllabus</a>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-top">
+              <h3 class="course-title">Data Structures</h3>
+              <span class="pill">Start</span>
+            </div>
+            <p class="course-desc">Arrays, stacks, queues, linked lists, trees, graphs + problem sets.</p>
+            <div class="course-actions">
+              <a class="mini-btn primary" href="#">Open</a>
+              <a class="mini-btn" href="#">Syllabus</a>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-top">
+              <h3 class="course-title">Machine Learning</h3>
+              <span class="pill">Coming soon</span>
+            </div>
+            <p class="course-desc">Supervised learning, evaluation, and real-world datasets (coming soon).</p>
+            <div class="course-actions">
+              <button class="mini-btn" disabled style="opacity:.6; cursor:not-allowed;">Notify me</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cta-row">
+        <a class="btn btn-solid btn-lg" href="#">Buy Now</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>

@@ -61,3 +61,28 @@
     <script src="script.js"></script>
   </body>
 </html>
+
+################################################
+## Implementing Auto Logout on Inactivity     ##
+################################################
+
+<script>
+  const IDLE_LIMIT_MS = 60 * 1000; // 6 hours
+  let idleTimer;
+
+  function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      // hit server logout to clear session + cookie, then land on login
+      window.location.href = "/logout";
+    }, IDLE_LIMIT_MS);
+  }
+
+  // Activity events that reset the timer
+  ["mousemove", "mousedown", "keydown", "scroll", "touchstart"].forEach(evt =>
+    document.addEventListener(evt, resetIdleTimer, { passive: true })
+  );
+
+  // start timer
+  resetIdleTimer();
+</script>

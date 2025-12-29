@@ -9,13 +9,25 @@ const path = require("path");
 const app = express();
 
 /* ==============
-   1) Session Setup
+   1) Session Setup (6-hr inactivity)
    ============== */
 app.use(
   session({
-    secret: "secret_key",
+    name: "sid",
+    secret: process.env.SESSION_SECRET || "secret_key",
     resave: false,
     saveUninitialized: false,
+
+    // ✅ 6 hours inactivity timeout (cookie expires after 6 hours)
+    cookie: {
+      httpOnly: true,
+      maxAge: 10 * 1000, // 6 hours
+      sameSite: "lax",
+      secure: false, // ✅ local HTTP
+    },
+
+    // ✅ sliding expiration (refresh cookie expiry on every request)
+    rolling: true,
   })
 );
 
@@ -31,12 +43,10 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 
-      // ✅ Always use absolute callback URL in production, but relative is okay for local.
+      // ✅ Keep this as the callback registered in Google Console
       callbackURL: "/auth/google/callback",
     },
-    (accessToken, refreshToken, profile, done) => {
-      return done(null, profile);
-    }
+    (accessToken, refreshToken, profile, done) => done(null, profile)
   )
 );
 
@@ -46,15 +56,17 @@ passport.deserializeUser((obj, done) => done(null, obj));
 /* ==============
    3) Static files
    ============== */
-/**
- * ✅ Best practice: serve static from root safely
- * This keeps your current setup working without changing folders.
- */
 app.use(express.static(__dirname));
 
 /* ==============
    4) Routes
    ============== */
+
+// Helper to protect routes
+function ensureAuth(req, res, next) {
+  if (req.isAuthenticated && req.isAuthenticated()) return next();
+  return res.redirect("/login");
+}
 
 // Home
 app.get("/", (req, res) => {
@@ -66,10 +78,17 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "login", "login.html"));
 });
 
+// Logout: ✅ destroy session + clear cookie
 app.get("/logout", (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
-    res.redirect("/index.html");
+
+    req.session.destroy(err2 => {
+      if (err2) return next(err2);
+
+      res.clearCookie("sid");
+      return res.redirect("/login");
+    });
   });
 });
 
@@ -81,18 +100,15 @@ app.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
-    // Redirect to the URL you want
+    // ✅ redirect to your desired dashboard URL
     return res.redirect("/auth/google/callback/dashboard/dashboard.html");
   }
 );
 
-// Serve the dashboard file for that URL (map it to your real file location)
-app.get("/auth/google/callback/dashboard/dashboard.html", (req, res) => {
+// Serve the dashboard (protected)
+app.get("/auth/google/callback/dashboard/dashboard.html", ensureAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "auth", "google", "dashboard", "dashboard.html"));
 });
-
-
-
 
 /* ==============
    5) Server

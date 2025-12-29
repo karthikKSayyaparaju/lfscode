@@ -7,6 +7,7 @@ const session = require("express-session");
 const path = require("path");
 
 const app = express();
+app.set('trust proxy', true);
 
 /* ==============
    1) Session Setup (6-hr inactivity)
@@ -45,6 +46,7 @@ passport.use(
 
       // ✅ Keep this as the callback registered in Google Console
       callbackURL: "/auth/google/callback",
+      proxy: true, // ✅ THIS IS CRITICAL for Azure/Proxies
     },
     (accessToken, refreshToken, profile, done) => done(null, profile)
   )

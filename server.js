@@ -7,6 +7,8 @@ const session = require("express-session");
 const path = require("path");
 
 const app = express();
+const INACTIVITY_MS = Number(process.env.INACTIVITY_MS) || 6 * 60 * 60 * 1000; // 6 hours
+
 
 // 1. TRUST PROXY (Essential for Azure/Proxies)
 app.set("trust proxy", 1);
@@ -22,13 +24,13 @@ app.use(
     name: "sid",
     secret: process.env.SESSION_SECRET || "super-secret-key",
     resave: false,
-    saveUninitialized: false, // Don't create session until something is stored
+    saveUninitialized: false,
     rolling: true,
     cookie: {
       httpOnly: true,
-      maxAge: 6 * 60 * 60 * 1000, // 6 hours
+      maxAge: INACTIVITY_MS, // 6 hours
       sameSite: "lax",
-      secure: isProduction, // TRUE on Azure (HTTPS), FALSE on localhost (HTTP)
+      secure: isProduction,
     },
   })
 );
@@ -45,10 +47,9 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/callback",
-      proxy: true, // 👈 CRITICAL: Tells Passport to trust X-Forwarded-Proto header
+      proxy: true,
     },
     (accessToken, refreshToken, profile, done) => {
-      // In a real app, you would find or create a user in your DB here
       return done(null, profile);
     }
   )
@@ -61,18 +62,57 @@ passport.deserializeUser((obj, done) => done(null, obj));
    4) Auth Middleware
    ===================== */
 function ensureAuth(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated && req.isAuthenticated()) {
     return next();
   }
   console.log("Blocking unauthorized access. Redirecting to /login");
-  res.redirect("/login");
+  return res.redirect("/login");
 }
+
+// ⏱️ Inactivity timeout (1 minute)
+const INACTIVITY_LIMIT = 10 * 1000; // 1 minute
+
+app.use((req, res, next) => {
+  if (req.session && req.isAuthenticated?.()) {
+    const now = Date.now();
+
+    if (req.session.lastActivity) {
+      const idleTime = now - req.session.lastActivity;
+
+      if (idleTime > INACTIVITY_LIMIT) {
+        console.log("Session expired due to inactivity");
+
+        return req.logout(err => {
+          if (err) return next(err);
+          req.session.destroy(() => {
+            res.clearCookie("sid");
+            return res.redirect("/login");
+          });
+        });
+      }
+    }
+
+    // Update activity timestamp
+    req.session.lastActivity = now;
+  }
+
+  next();
+});
+
 
 /* ======================
    5) Routes
    ====================== */
 
-// Default Home
+// ✅ Session check endpoint (used by script.js)
+app.get("/api/session", (req, res) => {
+  res.json({
+    authenticated: req.isAuthenticated?.() || false,
+    user: req.user || null,
+  });
+});
+
+// Default Home (PUBLIC)
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -83,10 +123,7 @@ app.get("/login", (req, res) => {
 });
 
 // Start Google OAuth
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 // Google Callback
 app.get(
@@ -94,7 +131,7 @@ app.get(
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
     console.log("Login Successful for:", req.user.displayName);
-    // Explicitly redirect to the dashboard file route
+    // Redirect to protected dashboard route
     res.redirect("/login/dashboard.html");
   }
 );
@@ -115,17 +152,10 @@ app.get("/logout", (req, res, next) => {
   });
 });
 
-
-
-// app.get("/login/dashboard.html", ensureAuth, (req, res) => {
-//   res.sendFile(path.join(__dirname, "login", "dashboard.html"));
-// });
-
 /* ======================
    6) Static Files & Server
    ====================== */
-// Serve static files AFTER defining protected routes to ensure 
-// middleware like ensureAuth runs first for the dashboard.
+// Serve static files AFTER defining protected routes
 app.use(express.static(__dirname));
 
 const PORT = process.env.PORT || 8080;
@@ -133,4 +163,3 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${isProduction ? "Production/Azure" : "Development"}`);
 });
-

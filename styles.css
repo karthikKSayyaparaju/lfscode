@@ -206,12 +206,6 @@ a { color: inherit; text-decoration: none; }
   .hero-inner { padding-top: 54px; }
 }
 
-
-
-
-
-/* */
-
 /* =========================================================
    LOGIN PAGE (ADD ONLY) — does not change existing site UI
    Works with your current HTML:
@@ -220,6 +214,7 @@ a { color: inherit; text-decoration: none; }
    ========================================================= */
 
 /* Make login page centered with a nice background */
+
 body.login-page {
   min-height: 100vh;
   display: grid;

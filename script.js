@@ -1,25 +1,60 @@
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("navLinks");
-const navActions = document.getElementById("navActions");
-const nav = document.querySelector(".nav");
+/* =========================================================
+   Client-Side Inactivity Timer
+   ---------------------------------------------------------
+   • Logs user out after 1 minute of NO interaction
+   • Provides instant UX logout
+   • Complements server-side enforcement
+   ========================================================= */
 
-if (hamburger && nav) {
-  hamburger.addEventListener("click", () => {
-    const isOpen = nav.classList.toggle("open");
-    hamburger.setAttribute("aria-expanded", String(isOpen));
-  });
+const INACTIVITY_MS = Number(process.env.INACTIVITY_MS) || 6 * 60 * 60 * 1000; // 6 hours
+
+let inactivityTimer;
+
+/**
+ * Resets the inactivity timer.
+ * Called whenever the user interacts with the page.
+ */
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+
+  inactivityTimer = setTimeout(() => {
+    // Redirect to logout endpoint after inactivity
+    window.location.href = "/logout";
+  }, INACTIVITY_LIMIT);
 }
+
+/**
+ * List of user interactions that count as "activity"
+ */
+[
+  "mousemove",    // mouse movement
+  "mousedown",    // mouse click
+  "keydown",      // keyboard input
+  "touchstart",   // mobile touch
+  "scroll"        // page scroll
+].forEach(event => {
+  document.addEventListener(event, resetInactivityTimer, true);
+});
+
+// Start inactivity timer immediately on page load
+resetInactivityTimer();
+
+/* =========================================================
+   Auth UI Logic (Log In / Log Out Toggle)
+   ========================================================= */
 
 (async function () {
   try {
-    const res = await fetch("/api/session", { credentials: "include" });
+    // Check session state from the server
+    const res = await fetch("/api/session", {
+      credentials: "include"
+    });
 
-    // If endpoint missing or error, just treat as logged out (no redirect)
     if (!res.ok) return;
 
     const data = await res.json();
 
-    // If logged in, show "Logout" instead of "Log In"
+    // If user is authenticated, show Logout link
     if (data.authenticated) {
       const authLink = document.getElementById("authLink");
       if (authLink) {
@@ -27,17 +62,8 @@ if (hamburger && nav) {
         authLink.href = "/logout";
       }
     }
-  } catch (e) {
-    // Treat as logged out; do nothing
-    return;
-  }
-
-  // Mobile menu toggle (optional)
-  if (hamburger && navLinks) {
-    hamburger.addEventListener("click", () => {
-      const expanded = hamburger.getAttribute("aria-expanded") === "true";
-      hamburger.setAttribute("aria-expanded", String(!expanded));
-      navLinks.classList.toggle("open");
-    });
+  } catch (err) {
+    // If session check fails, assume logged out
+    console.warn("Session check failed:", err);
   }
 })();

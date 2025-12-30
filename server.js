@@ -72,6 +72,11 @@ function ensureAuth(req, res, next) {
    5) Routes
    ====================== */
 
+// Default Home
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
 // Public login page
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "login", "login.html"));
@@ -110,14 +115,11 @@ app.get("/logout", (req, res, next) => {
   });
 });
 
-// Default Home
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
 
-app.get("/login/dashboard.html", ensureAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, "login", "dashboard.html"));
-});
+
+// app.get("/login/dashboard.html", ensureAuth, (req, res) => {
+//   res.sendFile(path.join(__dirname, "login", "dashboard.html"));
+// });
 
 /* ======================
    6) Static Files & Server

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile • LearnFromScratch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body {
+      background: #f8fafc;
+    }
+    .profile-hero {
+      background: linear-gradient(135deg, var(--accent), #15803d);
+      color: #fff;
+      padding: 48px 0 120px;
+    }
+    .profile-shell {
+      max-width: 1100px;
+      margin: -80px auto 60px;
+      padding: 0 24px;
+    }
+    .profile-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 24px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .profile-avatar-xl {
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
+      background: #e2e8f0;
+      display: grid;
+      place-items: center;
+      font-size: 36px;
+      font-weight: 800;
+      color: #0b1220;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid #fff;
+    }
+    .profile-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .profile-subline {
+      margin: 4px 0 0;
+      opacity: 0.8;
+      font-weight: 600;
+    }
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 420px;
+    }
+    .profile-nav {
+      border-right: 1px solid #e2e8f0;
+      padding: 18px;
+      background: linear-gradient(180deg, #f8fafc, #ffffff);
+    }
+    .profile-nav button {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      text-align: left;
+      margin-bottom: 10px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .profile-nav button.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.14);
+      transform: translateY(-1px);
+    }
+    .profile-nav button:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+    .profile-content {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+    .info-section {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .info-header {
+      padding: 14px 16px;
+      background: #f8fafc;
+      font-weight: 800;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .info-row {
+      display: grid;
+      grid-template-columns: 200px 1fr 60px;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      gap: 8px;
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .info-value {
+      color: #1f2937;
+      font-weight: 600;
+      min-height: 20px;
+    }
+    .info-empty {
+      color: #94a3b8;
+    }
+    .edit-link {
+      color: #0b82f0;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 14px;
+      justify-self: end;
+    }
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #075985;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    @media (max-width: 960px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+      .profile-nav {
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        gap: 10px;
+      }
+      .profile-nav button {
+        flex: 1;
+        margin: 0;
+      }
+      .info-row {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 4px;
+      }
+      .edit-link {
+        justify-self: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.__HEADER_CONFIG__ = {
+      navLinks: [
+        { href: "/login/dashboard.html", label: "Dashboard" },
+        { href: "/login/python-course.html", label: "Python" },
+      ],
+      actionButtons: [
+        { href: "/login/dashboard.html", label: "Back to dashboard", className: "btn btn-outline" },
+      ],
+      hideAuthLink: true,
+    };
+  </script>
+  <div id="headerMount"></div>
+
+  <div class="profile-hero">
+    <div class="container">
+      <h1 style="margin:0; font-weight:800;">Your profile</h1>
+      <p style="margin:6px 0 0; opacity:.85; font-weight:600;">Manage your info and social links.</p>
+    </div>
+  </div>
+
+  <main class="profile-shell">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar-xl" id="profileAvatarXL" aria-label="Profile picture"></div>
+        <div>
+          <p class="profile-title" id="profileTitle">Your name</p>
+          <p class="profile-subline" id="profileSubtitle">Email goes here</p>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        <div class="profile-nav" aria-label="Profile sections">
+          <button class="active" type="button">Basic Info</button>
+          <button type="button">Account</button>
+          <button type="button">Privacy</button>
+        </div>
+
+        <div class="profile-content">
+          <section class="info-section">
+            <div class="info-header">Basic Info</div>
+            <div class="info-row">
+              <div class="info-label">Name</div>
+              <div class="info-value" id="fieldName">-</div>
+              <a class="edit-link" href="#">Edit</a>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Email</div>
+              <div class="info-value" id="fieldEmail">-</div>
+              <a class="edit-link" href="#">Edit</a>
+            </div>
+            <div class="info-row">
+              <div class="info-label">LinkedIn</div>
+              <div class="info-value" id="fieldLinkedIn">Add your LinkedIn</div>
+              <a class="edit-link" href="#">Edit</a>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Github</div>
+              <div class="info-value" id="fieldGithub">Add your Github</div>
+              <a class="edit-link" href="#">Edit</a>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Website</div>
+              <div class="info-value" id="fieldWebsite">Add your site</div>
+              <a class="edit-link" href="#">Edit</a>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Bio</div>
+              <div class="info-value" id="fieldBio">Tell us about yourself</div>
+              <a class="edit-link" href="#">Edit</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/script.js"></script>
+  <script>
+    async function populateProfile() {
+      try {
+        const res = await fetch("/api/session", { credentials: "include" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data.authenticated || !data.user) return;
+
+        const user = data.user;
+        const name = user.displayName || user.name?.givenName || user.emails?.[0]?.value || "Your name";
+        const email = user.email || user.emails?.[0]?.value || "Add your email";
+        const photoUrl = Array.isArray(user.photos)
+          ? user.photos.find((p) => p && p.value)?.value
+          : (user.picture || null);
+
+        const initial = name.charAt(0)?.toUpperCase() || "U";
+        const avatar = document.getElementById("profileAvatarXL");
+        if (avatar) {
+          if (photoUrl) {
+            const clean = String(photoUrl).replace(/["')\\]/g, "");
+            avatar.style.backgroundImage = `url("${clean}")`;
+            avatar.textContent = "";
+          } else {
+            avatar.style.backgroundImage = "none";
+            avatar.textContent = initial;
+          }
+        }
+
+        const assignText = (id, value, fallback = "Not provided") => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const isEmpty = !value;
+          el.textContent = value || fallback;
+          el.classList.toggle("info-empty", isEmpty);
+        };
+
+        assignText("profileTitle", name);
+        assignText("profileSubtitle", email);
+        assignText("fieldName", name);
+        assignText("fieldEmail", email);
+
+        // Placeholder socials; replace with real data when available
+        assignText("fieldLinkedIn", user.linkedin, "Add your LinkedIn");
+        assignText("fieldGithub", user.github, "Add your Github");
+        assignText("fieldWebsite", user.website, "Add your site");
+        assignText("fieldBio", user.bio, "Tell us about yourself");
+      } catch (err) {
+        console.warn("Profile load failed:", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", populateProfile);
+  </script>
+</body>
+</html>

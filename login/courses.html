@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses • LearnFromScratch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body { background: #f8fafc; }
+    .courses-shell {
+      display: grid;
+      grid-template-columns: 280px 1fr 320px;
+      gap: 18px;
+      padding: 18px 0 60px;
+    }
+    .rail {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 90px;
+      align-self: start;
+    }
+    .rail h3 { margin: 0 0 6px; font-weight: 800; }
+    .rail p { margin: 0 0 10px; opacity: 0.82; font-weight: 600; }
+    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 0; }
+    .pill-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #075985;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .topics {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+      min-height: 60vh;
+    }
+    .topics h2 { margin: 0 0 12px; font-weight: 800; }
+    .topic-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      margin-bottom: 10px;
+      transition: transform 120ms ease, box-shadow 160ms ease;
+    }
+    .topic-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+    .topic-title { margin: 0; font-weight: 800; }
+    .topic-desc { margin: 4px 0 0; opacity: 0.8; font-weight: 600; }
+    .topic-meta { display: flex; gap: 8px; align-items: center; font-weight: 700; opacity: .78; }
+    .topic-link a { color: var(--btn); font-weight: 800; }
+    .right-rail {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+      min-height: 240px;
+    }
+    @media (max-width: 1100px) {
+      .courses-shell { grid-template-columns: 1fr; }
+      .rail, .right-rail { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.__HEADER_CONFIG__ = {
+      navLinks: [
+        { href: "/login/dashboard.html", label: "Dashboard" },
+        { href: "/login/courses.html", label: "Courses" },
+      ],
+      actionButtons: [
+        { href: "/login/dashboard.html", label: "Back to dashboard", className: "btn btn-outline" },
+      ],
+      hideAuthLink: true,
+    };
+  </script>
+  <div id="headerMount"></div>
+
+  <div class="container">
+    <div style="padding: 12px 0 6px;">
+      <h1 style="margin:0; font-weight:800;">Python Foundations</h1>
+      <p style="margin:6px 0 0; opacity:.82; font-weight:600;">Pick a topic to open a dedicated page with description + runnable code.</p>
+    </div>
+
+    <div class="courses-shell">
+      <aside class="rail">
+        <h3>Course overview</h3>
+        <p>Syntax, control flow, functions, lists, and dictionaries with live code.</p>
+        <div class="pill-row">
+          <span class="pill-tag">Beginner</span>
+          <span class="pill-tag">Hands-on</span>
+          <span class="pill-tag">Python 3</span>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+          <a class="btn btn-outline" href="/login/course-topic.html?lesson=print">Start first topic</a>
+        </div>
+      </aside>
+
+      <section class="topics" id="topicsList">
+        <h2>Topics</h2>
+      </section>
+
+      <aside class="right-rail">
+        <h3 style="margin:0 0 6px; font-weight:800;">Progress</h3>
+        <p style="margin:0 0 10px; opacity:.82; font-weight:600;">Track completion as you go.</p>
+        <div style="display:flex; flex-direction:column; gap:8px; font-weight:700; opacity:.82;">
+          <span>Print statements</span>
+          <span>If statements</span>
+          <span>For loops</span>
+          <span>While loops</span>
+          <span>Functions</span>
+          <span>Lists</span>
+          <span>Dictionaries</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="/script.js"></script>
+  <script>
+    const TOPICS = [
+      { id: "print", title: "Print statements", desc: "Use print() to show strings, numbers, and variables.", level: "Easy" },
+      { id: "if", title: "If statements", desc: "Branch with if / elif / else to handle choices.", level: "Easy" },
+      { id: "for", title: "For loops", desc: "Loop over lists or ranges to repeat work.", level: "Easy" },
+      { id: "while", title: "While loops", desc: "Repeat while a condition stays true.", level: "Easy" },
+      { id: "funcs", title: "Functions", desc: "Group logic in reusable functions.", level: "Med." },
+      { id: "lists", title: "Lists", desc: "Store ordered items; append, slice, iterate.", level: "Easy" },
+      { id: "dicts", title: "Dictionaries", desc: "Key/value storage for fast lookups.", level: "Med." },
+    ];
+
+    function renderTopics() {
+      const container = document.getElementById("topicsList");
+      if (!container) return;
+      const fragment = document.createDocumentFragment();
+      TOPICS.forEach((topic) => {
+        const card = document.createElement("article");
+        card.className = "topic-card";
+        card.innerHTML = `
+          <div>
+            <p class="topic-title">${topic.title}</p>
+            <p class="topic-desc">${topic.desc}</p>
+            <div class="topic-meta">
+              <span>${topic.level}</span>
+            </div>
+          </div>
+          <div class="topic-link">
+            <a href="/login/course-topic.html?lesson=${encodeURIComponent(topic.id)}">Open</a>
+          </div>
+        `;
+        fragment.appendChild(card);
+      });
+      container.appendChild(fragment);
+    }
+
+    document.addEventListener("DOMContentLoaded", renderTopics);
+  </script>
+</body>
+</html>

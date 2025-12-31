@@ -75,14 +75,23 @@ function hydrateNavActions(config) {
   const navActions = document.getElementById("navActions");
   if (!navActions) return;
   const authLink = document.getElementById("authLink");
+  const hasAuth = authLink && navActions.contains(authLink);
+  const insertBeforeNode = hasAuth ? authLink : navActions.firstChild;
+
+  if (config?.hideAuthLink && hasAuth) {
+    authLink.remove();
+  }
 
   (config?.actionButtons || []).forEach((btn) => {
     const a = document.createElement("a");
     a.href = btn.href || "#";
     a.textContent = btn.label || "";
     if (btn.className) a.className = btn.className;
-    if (!authLink) navActions.prepend(a);
-    else navActions.insertBefore(a, authLink);
+    if (insertBeforeNode && navActions.contains(insertBeforeNode)) {
+      navActions.insertBefore(a, insertBeforeNode);
+    } else {
+      navActions.prepend(a);
+    }
   });
 }
 

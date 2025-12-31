@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic • LearnFromScratch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body { background: #f8fafc; }
+    .topic-shell {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 18px;
+      padding: 18px 0 60px;
+      align-items: start;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+    }
+    .topic-name { margin:0 0 6px; font-weight: 800; font-size: 24px; }
+    .topic-sub { margin:0 0 12px; opacity:.82; font-weight:600; }
+    .code-panel {
+      min-height: 60vh;
+      display: grid;
+      gap: 10px;
+    }
+    textarea.code-input {
+      width: 100%;
+      min-height: 220px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    pre.output, pre.solution-view {
+      background: #0b1220;
+      color: #e2e8f0;
+      border-radius: 12px;
+      padding: 12px;
+      min-height: 60px;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    .pill-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .pill-btn {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .pill-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    @media (max-width: 1024px) {
+      .topic-shell { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.__HEADER_CONFIG__ = {
+      navLinks: [
+        { href: "/login/dashboard.html", label: "Dashboard" },
+        { href: "/login/courses.html", label: "Courses" },
+      ],
+      actionButtons: [
+        { href: "/login/courses.html", label: "Back to courses", className: "btn btn-outline" },
+      ],
+      hideAuthLink: true,
+    };
+  </script>
+  <div id="headerMount"></div>
+
+  <div class="container">
+    <div class="topic-shell">
+      <aside class="card">
+        <p class="topic-name" id="topicTitle">Topic</p>
+        <p class="topic-sub" id="topicDesc">Description</p>
+        <div>
+          <p style="margin:0 0 6px; font-weight:800;">Related topics</p>
+          <div class="pill-row" id="topicPills"></div>
+        </div>
+      </aside>
+
+      <section class="card code-panel">
+        <div class="pill-row" id="topicTabs"></div>
+        <label for="code-editor"><strong>Try it yourself</strong></label>
+        <textarea id="code-editor" class="code-input" spellcheck="false"></textarea>
+        <div class="btn-row">
+          <button class="btn btn-outline" id="runUser">Run your code</button>
+          <button class="btn" id="loadSample">Load our code</button>
+          <button class="btn" id="runSample">Run our code</button>
+          <button class="btn btn-outline" id="toggleSolution">Reveal our code</button>
+        </div>
+        <pre id="solutionView" class="solution-view" aria-live="polite"></pre>
+        <pre id="output" class="output" aria-live="polite"></pre>
+      </section>
+    </div>
+  </div>
+
+  <script src="/script.js"></script>
+  <script>
+    const LESSON_META = {
+      print: {
+        title: "Print statements",
+        desc: "Use print() to show strings, numbers, and variables. Great for quick checks.",
+        placeholder: 'print("Hello, world!")',
+      },
+      if: {
+        title: "If statements",
+        desc: "Branch with if / elif / else to handle thresholds or choices.",
+        placeholder: "score = 50\\nif score > 40:\\n    print('pass')",
+      },
+      for: {
+        title: "For loops",
+        desc: "Loop over lists or ranges to repeat work predictably.",
+        placeholder: "for i in range(5):\\n    print(i)",
+      },
+      while: {
+        title: "While loops",
+        desc: "Repeat while a condition stays true; remember to update the condition inside the loop.",
+        placeholder: "count = 0\\nwhile count < 3:\\n    print(count)\\n    count += 1",
+      },
+      funcs: {
+        title: "Functions",
+        desc: "Group logic in reusable functions; use parameters and return values.",
+        placeholder: "def greet(name):\\n    return f\\\"Hi {name}\\\"\\n\\nprint(greet('Ada'))",
+      },
+      lists: {
+        title: "Lists",
+        desc: "Store ordered items; index, slice, append, and iterate.",
+        placeholder: "nums = [1,2,3]\\nnums.append(4)\\nfor n in nums:\\n    print(n)",
+      },
+      dicts: {
+        title: "Dictionaries",
+        desc: "Key/value storage; great for lookups. Use .get to avoid KeyErrors.",
+        placeholder: "person = {'name':'Ada','role':'dev'}\\nprint(person['name'])",
+      },
+    };
+
+    function getLessonFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("lesson") || "print";
+    }
+
+    function buildTabs(current) {
+      const tabs = document.getElementById("topicTabs");
+      if (!tabs) return;
+      tabs.innerHTML = "";
+      Object.keys(LESSON_META).forEach((key) => {
+        const btn = document.createElement("button");
+        btn.className = "pill-btn" + (key === current ? " active" : "");
+        btn.dataset.lesson = key;
+        btn.textContent = LESSON_META[key].title;
+        tabs.appendChild(btn);
+      });
+    }
+
+    function getSolutionCode(lesson) {
+      const map = {
+        print: `print("Hello, world!")\\nname = "Ada"\\nprint("Hi", name)\\nprint(f"2 + 2 = {2 + 2}")`,
+        if: `score = 82\\n\\nif score >= 90:\\n    print("A")\\nelif score >= 80:\\n    print("B")\\nelse:\\n    print("Keep practicing!")`,
+        for: `nums = [1, 2, 3, 4]\\n\\nfor n in nums:\\n    print(n)\\n\\nfor i in range(3):\\n    print("loop", i)`,
+        while: `count = 0\\n\\nwhile count < 3:\\n    print(count)\\n    count += 1`,
+        funcs: `def greet(name):\\n    return f"Hi {name}"\\n\\nprint(greet("Ada"))`,
+        lists: `nums = [1, 2, 3]\\nnums.append(4)\\n\\nfor n in nums:\\n    print(n)`,
+        dicts: `person = {"name": "Ada", "role": "dev"}\\nprint(person["name"])`,
+      };
+      return map[lesson] || "";
+    }
+
+    let currentLesson = getLessonFromQuery();
+    let solutionCache = {};
+
+    function setLesson(lesson) {
+      currentLesson = lesson;
+      const meta = LESSON_META[lesson] || LESSON_META.print;
+      document.querySelectorAll(".pill-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lesson === lesson);
+      });
+      document.getElementById("topicTitle").textContent = meta.title;
+      document.getElementById("topicDesc").textContent = meta.desc;
+      document.getElementById("code-editor").placeholder = meta.placeholder;
+      document.getElementById("solutionView").style.display = "none";
+      document.getElementById("toggleSolution").textContent = "Reveal our code";
+    }
+
+    async function runLesson(useSolution = false) {
+      const outputEl = document.getElementById("output");
+      const editor = document.getElementById("code-editor");
+      outputEl.textContent = "Running...";
+      const code = useSolution ? solutionCache[currentLesson] : editor.value;
+      try {
+        const res = await fetch("/api/run-python", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ lesson: currentLesson, code }),
+          credentials: "include",
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          outputEl.textContent = data.error || "Error running code";
+          return;
+        }
+        outputEl.textContent = data.output || "(no output)";
+      } catch (err) {
+        outputEl.textContent = "Failed to run code";
+      }
+    }
+
+    function init() {
+      buildTabs(currentLesson);
+      Object.keys(LESSON_META).forEach((key) => {
+        solutionCache[key] = getSolutionCode(key);
+      });
+      setLesson(currentLesson);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      init();
+
+      document.getElementById("topicTabs").addEventListener("click", (e) => {
+        if (e.target.matches("[data-lesson]")) {
+          setLesson(e.target.dataset.lesson);
+        }
+      });
+
+      document.getElementById("runUser").addEventListener("click", () => runLesson(false));
+      document.getElementById("runSample").addEventListener("click", () => runLesson(true));
+      document.getElementById("loadSample").addEventListener("click", () => {
+        document.getElementById("code-editor").value = solutionCache[currentLesson] || "";
+      });
+      document.getElementById("toggleSolution").addEventListener("click", () => {
+        const view = document.getElementById("solutionView");
+        const isHidden = view.style.display === "none";
+        if (isHidden) {
+          view.textContent = solutionCache[currentLesson] || "";
+          view.style.display = "block";
+          document.getElementById("toggleSolution").textContent = "Hide our code";
+        } else {
+          view.style.display = "none";
+          document.getElementById("toggleSolution").textContent = "Reveal our code";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

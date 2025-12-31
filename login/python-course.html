@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python Course | LearnFromScratch</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    .course-shell { padding: 24px 0 60px; width: min(1280px, 96vw); }
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+      position: relative;
+    }
+    .panel {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+      display: grid;
+      gap: 16px;
+      min-height: 75vh;
+    }
+    .crumbs { font-weight: 700; letter-spacing: -0.1px; margin: 0; }
+    .crumbs a { text-decoration: underline; text-underline-offset: 3px; }
+    .course-title { margin: 0; font-size: clamp(28px, 5vw, 42px); letter-spacing: -0.04em; font-weight: 500; font-family: 'Open Sans', sans-serif; }
+    .course-lede { margin: 6px 0 0; color: #475569; line-height: 1.5; font-weight: 600; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      font-weight: 800;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .syllabus-list { list-style: none; padding: 0; margin: 16px 0 0; display: none; gap: 14px; }
+    .syllabus-item {
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 12px;
+      padding: 14px;
+      background: rgba(0,0,0,0.03);
+      display: grid;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .syllabus-item h4 { margin: 0; letter-spacing: -0.04em; color: var(--accent); font-family: 'Open Sans', sans-serif; font-weight: 500; }
+    .syllabus-item p { margin: 0; color: #475569; line-height: 1.45; font-weight: 600; font-size: 14px; }
+    .syllabus-detail { padding-left: 16px; margin: 4px 0 0; display: grid; gap: 4px; font-size: 13px; color: #475569; font-weight: 600; }
+    .syllabus-detail li { list-style: disc; }
+    .inline-sample {
+      margin: 0;
+      padding: 10px;
+      border-radius: 10px;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-size: 12px;
+      line-height: 1.4;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    .code-panel { gap: 14px; }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill-btn {
+      border-radius: 10px;
+      padding: 8px 12px;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: rgba(0,0,0,0.04);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .pill-btn.active {
+      background: #0b1220;
+      color: #fff;
+      border-color: rgba(0,0,0,0.25);
+    }
+    .topic-desc { margin: 0; color: #475569; line-height: 1.5; font-weight: 600; }
+    textarea.code-input {
+      width: 100%;
+      min-height: 320px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.12);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      background: #f8fafc;
+    }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .output, .solution-view {
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 80px;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.45;
+      overflow-x: auto;
+      margin: 0;
+    }
+    .solution-view { display: none; }
+
+    @media (max-width: 900px) {
+      .workspace { grid-template-columns: 1fr; }
+    }
+
+    /* Overlay syllabus drawer */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: none;
+      align-items: stretch;
+      justify-content: flex-start;
+      z-index: 200;
+    }
+    .drawer {
+      width: min(360px, 90vw);
+      background: #fff;
+      border-right: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+    }
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .drawer-list {
+      overflow-y: auto;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .drawer-item {
+      padding: 12px 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .drawer-item.active {
+      background: #0b1220;
+      color: #fff;
+    }
+    .difficulty {
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.06);
+    }
+    .difficulty.easy { color: #16a34a; }
+    .difficulty.med { color: #d97706; }
+    .difficulty.hard { color: #dc2626; }
+  </style>
+</head>
+
+<body>
+<script>
+  window.__HEADER_CONFIG__ = {
+    navLinks: [
+      { href: "#outline", label: "Outline" },
+      { href: "#print", label: "Print" },
+      { href: "#if", label: "If" },
+      { href: "#for-loop", label: "For Loop" },
+    ],
+    actionButtons: [
+      { href: "/login/dashboard.html", label: "Back to dashboard", className: "btn btn-outline" },
+    ],
+  };
+</script>
+<div id="headerMount"></div>
+
+
+  <main class="container course-shell">
+    <div class="workspace">
+      <section class="panel description-panel" id="outline">
+        <h1 class="course-title"><span class="accent">Python Foundations</span></h1>
+        <p class="course-lede">Side-by-side learning: pick a topic, read the description, and run the code on the right.</p>
+        <!-- <div class="chips">
+          <span class="chip">Beginner</span>
+          <span class="chip">Hands-on</span>
+          <span class="chip">Python 3</span>
+        </div> -->
+
+        <div style="display:flex; align-items:center; gap:10px; justify-content: space-between;">
+          <h3 style="margin:6px 0 0; letter-spacing:-0.02em;">Syllabus</h3>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-outline" id="toggleSyllabus">Show topics</button>
+            <button class="btn btn-outline" id="openDrawer">Open list</button>
+          </div>
+        </div>
+        <ol class="syllabus-list">
+          <li class="syllabus-item" data-topic="print" id="print">
+            <h4>Print statements</h4>
+            <p>Send output to the console and combine strings and values.</p>
+            <pre class="inline-sample">print("Hello, world!")</pre>
+            <ul class="syllabus-detail">
+              <li>Print literals or variables; <code>print("Hi", name)</code> inserts a space for you.</li>
+              <li>Use <code>f""</code> strings to embed expressions inline, e.g., <code>f"2 + 2 = {2 + 2}"</code>.</li>
+              <li>Multiple arguments become space-separated in the output.</li>
+            </ul>
+          </li>
+          <li class="syllabus-item" data-topic="if" id="if">
+            <h4>If statements</h4>
+            <p>Branch logic with <code>if</code>, <code>elif</code>, and <code>else</code>.</p>
+            <pre class="inline-sample">score = 82\nif score >= 80:\n    print("B or better")</pre>
+          </li>
+          <li class="syllabus-item" data-topic="for" id="for-loop">
+            <h4>For loops</h4>
+            <p>Iterate over sequences or ranges to repeat work.</p>
+            <pre class="inline-sample">for i in range(3):\n    print(i)</pre>
+          </li>
+          <li class="syllabus-item" data-topic="while" id="while-topic">
+            <h4>While loops</h4>
+            <p>Repeat while a condition stays true; update the condition to avoid infinite loops.</p>
+            <pre class="inline-sample">count = 0\nwhile count < 3:\n    print(count)\n    count += 1</pre>
+          </li>
+          <li class="syllabus-item" data-topic="funcs" id="funcs-topic">
+            <h4>Functions</h4>
+            <p>Group logic into reusable blocks with parameters and return values.</p>
+            <pre class="inline-sample">def greet(name):\n    return f"Hi {name}"\n\nprint(greet("Ada"))</pre>
+          </li>
+          <li class="syllabus-item" data-topic="lists" id="lists-topic">
+            <h4>Lists</h4>
+            <p>Ordered collections you can append to and iterate over.</p>
+            <pre class="inline-sample">nums = [1,2,3]\nnums.append(4)\nfor n in nums:\n    print(n)</pre>
+          </li>
+          <li class="syllabus-item" data-topic="dicts" id="dicts-topic">
+            <h4>Dictionaries</h4>
+            <p>Key/value storage for fast lookups; use .get to avoid KeyErrors.</p>
+            <pre class="inline-sample">person = {"name":"Ada","role":"dev"}\nprint(person["name"])</pre>
+          </li>
+        </ol>
+      </section>
+
+      <section class="panel code-panel" aria-label="Code editor">
+        <div class="pill-row" id="topicTabs">
+          <button class="pill-btn active" data-lesson="print">Print</button>
+          <button class="pill-btn" data-lesson="if">If</button>
+          <button class="pill-btn" data-lesson="for">For</button>
+          <button class="pill-btn" data-lesson="while">While</button>
+          <button class="pill-btn" data-lesson="funcs">Functions</button>
+          <button class="pill-btn" data-lesson="lists">Lists</button>
+          <button class="pill-btn" data-lesson="dicts">Dictionaries</button>
+        </div>
+        <p class="topic-desc" id="topicDesc"></p>
+
+        <button class="btn btn-outline" id="toggleSolution">Reveal our code</button>
+        <pre id="solutionView" class="solution-view" aria-live="polite"></pre>
+
+        <div class="user-runner">
+          <label for="code-editor"><strong>Try it yourself</strong></label>
+          <textarea id="code-editor" class="code-input" spellcheck="false"></textarea>
+          <div class="btn-row">
+            <button class="btn btn-outline" id="runUser">Run your code</button>
+            <button class="btn" id="loadSample">Load our code</button>
+            <button class="btn" id="runSample">Run our code</button>
+          </div>
+          <pre id="output" class="output" aria-live="polite"></pre>
+        </div>
+      </section>
+    </div>
+
+    <!-- hidden solutions to power the editor -->
+    <pre class="solution" data-solution="print"><code>print("Hello, world!")
+name = "Ada"
+print("Hi", name)
+print(f"2 + 2 = {2 + 2}")</code></pre>
+
+    <pre class="solution" data-solution="if"><code>score = 82
+
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+else:
+    print("Keep practicing!")</code></pre>
+
+    <pre class="solution" data-solution="for"><code>nums = [1, 2, 3, 4]
+
+for n in nums:
+    print(n)
+
+# using range
+for i in range(3):
+    print("loop", i)</code></pre>
+
+    <pre class="solution" data-solution="while"><code>count = 0
+
+while count < 3:
+    print(count)
+    count += 1</code></pre>
+
+    <pre class="solution" data-solution="funcs"><code>def greet(name):
+    return f"Hi {name}"
+
+print(greet("Ada"))</code></pre>
+
+    <pre class="solution" data-solution="lists"><code>nums = [1, 2, 3]
+nums.append(4)
+
+for n in nums:
+    print(n)</code></pre>
+
+    <pre class="solution" data-solution="dicts"><code>person = {"name": "Ada", "role": "dev"}
+print(person["name"])</code></pre>
+  </main>
+
+  <!-- Drawer overlay for syllabus -->
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true">
+    <aside class="drawer" role="dialog" aria-label="Syllabus list">
+      <div class="drawer-header">
+        <span>Syllabus</span>
+        <button class="btn btn-outline" id="closeDrawer">Close</button>
+      </div>
+      <div class="drawer-list">
+        <div class="drawer-item active" data-lesson="print">
+          <span>Print statements</span>
+          <span class="difficulty easy">Easy</span>
+        </div>
+        <div class="drawer-item" data-lesson="if">
+          <span>If statements</span>
+          <span class="difficulty med">Med.</span>
+        </div>
+        <div class="drawer-item" data-lesson="for">
+          <span>For loops</span>
+          <span class="difficulty easy">Easy</span>
+        </div>
+        <div class="drawer-item" data-lesson="while">
+          <span>While loops</span>
+          <span class="difficulty easy">Easy</span>
+        </div>
+        <div class="drawer-item" data-lesson="funcs">
+          <span>Functions</span>
+          <span class="difficulty med">Med.</span>
+        </div>
+        <div class="drawer-item" data-lesson="lists">
+          <span>Lists</span>
+          <span class="difficulty easy">Easy</span>
+        </div>
+        <div class="drawer-item" data-lesson="dicts">
+          <span>Dictionaries</span>
+          <span class="difficulty med">Med.</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="/script.js"></script>
+  <script>
+    const LESSON_META = {
+      print: {
+        desc: "Use print() to show strings, numbers, and variables. Great for quick checks.",
+        placeholder: 'print("Hello, world!")',
+      },
+      if: {
+        desc: "Branch with if / elif / else to handle thresholds or choices.",
+        placeholder: "score = 50\nif score > 40:\n    print('pass')",
+      },
+      for: {
+        desc: "Loop over lists or ranges to repeat work predictably.",
+        placeholder: "for i in range(5):\n    print(i)",
+      },
+      while: {
+        desc: "Repeat while a condition stays true; remember to update the condition inside the loop.",
+        placeholder: "count = 0\nwhile count < 3:\n    print(count)\n    count += 1",
+      },
+      funcs: {
+        desc: "Group logic in reusable functions; use parameters and return values.",
+        placeholder: "def greet(name):\n    return f\"Hi {name}\"\n\nprint(greet('Ada'))",
+      },
+      lists: {
+        desc: "Store ordered items; index, slice, append, and iterate.",
+        placeholder: "nums = [1,2,3]\nnums.append(4)\nfor n in nums:\n    print(n)",
+      },
+      dicts: {
+        desc: "Key/value storage; great for lookups. Use .get to avoid KeyErrors.",
+        placeholder: "person = {'name':'Ada','role':'dev'}\nprint(person['name'])",
+      },
+    };
+
+    function getSolutionCode(lesson) {
+      const el = document.querySelector(`pre.solution[data-solution="${lesson}"] code`);
+      return el ? el.textContent : "";
+    }
+
+    const solutionCache = {
+      print: getSolutionCode("print"),
+      if: getSolutionCode("if"),
+      for: getSolutionCode("for"),
+    };
+
+    let currentLesson = "print";
+
+    function setLesson(lesson) {
+      currentLesson = lesson;
+      document.querySelectorAll(".pill-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lesson === lesson);
+      });
+      document.getElementById("topicDesc").textContent = LESSON_META[lesson]?.desc || "";
+      const editor = document.getElementById("code-editor");
+      editor.placeholder = LESSON_META[lesson]?.placeholder || "";
+      document.getElementById("solutionView").style.display = "none";
+      document.getElementById("toggleSolution").textContent = "Reveal our code";
+      document.querySelectorAll(".drawer-item").forEach(item => {
+        item.classList.toggle("active", item.dataset.lesson === lesson);
+      });
+    }
+
+    async function runLesson(useSolution = false) {
+      const outputEl = document.getElementById("output");
+      const editor = document.getElementById("code-editor");
+      outputEl.textContent = "Running...";
+      const code = useSolution ? solutionCache[currentLesson] : editor.value;
+      try {
+        const res = await fetch("/api/run-python", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ lesson: currentLesson, code }),
+          credentials: "include",
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          outputEl.textContent = data.error || "Error running code";
+          return;
+        }
+        outputEl.textContent = data.output || "(no output)";
+      } catch (err) {
+        outputEl.textContent = "Failed to run code";
+      }
+    }
+
+    document.getElementById("topicTabs").addEventListener("click", (e) => {
+      if (e.target.matches("[data-lesson]")) {
+        setLesson(e.target.dataset.lesson);
+      }
+    });
+
+    document.querySelectorAll(".syllabus-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const lesson = item.dataset.topic;
+        if (lesson) setLesson(lesson);
+      });
+    });
+
+    // Drawer handlers
+    const drawerBackdrop = document.getElementById("drawerBackdrop");
+    const openDrawer = document.getElementById("openDrawer");
+    const closeDrawer = document.getElementById("closeDrawer");
+
+    function showDrawer(show) {
+      drawerBackdrop.style.display = show ? "flex" : "none";
+      drawerBackdrop.setAttribute("aria-hidden", show ? "false" : "true");
+    }
+
+    openDrawer.addEventListener("click", () => showDrawer(true));
+    closeDrawer.addEventListener("click", () => showDrawer(false));
+    drawerBackdrop.addEventListener("click", (e) => {
+      if (e.target === drawerBackdrop) showDrawer(false);
+    });
+    document.querySelectorAll(".drawer-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const lesson = item.dataset.lesson;
+        if (lesson) {
+          setLesson(lesson);
+          showDrawer(false);
+        }
+      });
+    });
+
+    // Toggle inline syllabus list
+    const toggleSyllabus = document.getElementById("toggleSyllabus");
+    const syllabusList = document.querySelector(".syllabus-list");
+    let syllabusVisible = false;
+    toggleSyllabus.addEventListener("click", () => {
+      syllabusVisible = !syllabusVisible;
+      syllabusList.style.display = syllabusVisible ? "grid" : "none";
+      toggleSyllabus.textContent = syllabusVisible ? "Hide topics" : "Show topics";
+    });
+
+    document.getElementById("runUser").addEventListener("click", () => runLesson(false));
+    document.getElementById("runSample").addEventListener("click", () => runLesson(true));
+    document.getElementById("loadSample").addEventListener("click", () => {
+      document.getElementById("code-editor").value = solutionCache[currentLesson] || "";
+    });
+
+    document.getElementById("toggleSolution").addEventListener("click", () => {
+      const view = document.getElementById("solutionView");
+      const isHidden = view.style.display === "none";
+      if (isHidden) {
+        view.textContent = solutionCache[currentLesson] || "";
+        view.style.display = "block";
+        document.getElementById("toggleSolution").textContent = "Hide our code";
+      } else {
+        view.style.display = "none";
+        document.getElementById("toggleSolution").textContent = "Reveal our code";
+      }
+    });
+
+    // Initialize UI
+    setLesson(currentLesson);
+    document.querySelectorAll("pre.solution").forEach(pre => (pre.style.display = "none"));
+  </script>
+</body>
+</html>

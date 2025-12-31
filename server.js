@@ -5,6 +5,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const session = require("express-session");
 const path = require("path");
+const { spawn } = require("child_process");
 
 const app = express();
 const INACTIVITY_MS = Number(process.env.INACTIVITY_MS) || 6 * 60 * 60 * 1000; // 6 hours
@@ -69,8 +70,16 @@ function ensureAuth(req, res, next) {
   return res.redirect("/login");
 }
 
-// ⏱️ Inactivity timeout (1 minute)
-const INACTIVITY_LIMIT = 10 * 1000; // 1 minute
+// Protect /login paths except the public login assets
+app.use("/login", (req, res, next) => {
+  const openPaths = new Set(["/login.html", "/login.js", "/", ""]);
+  if (openPaths.has(req.path)) return next();
+  res.set("Cache-Control", "no-store");
+  return ensureAuth(req, res, next);
+});
+
+// ⏱️ Inactivity timeout (1 hour)
+const INACTIVITY_LIMIT = 60 * 60 * 1000; // 1 hour
 
 app.use((req, res, next) => {
   if (req.session && req.isAuthenticated?.()) {
@@ -106,9 +115,80 @@ app.use((req, res, next) => {
 
 // ✅ Session check endpoint (used by script.js)
 app.get("/api/session", (req, res) => {
+  if (!req.user) return res.json({ authenticated: false });
+
+  const profile = req.user || {};
+  const displayName =
+    profile.displayName ||
+    profile.name?.givenName ||
+    profile.name ||
+    profile.emails?.[0]?.value ||
+    "";
+  const email = profile.email || profile.emails?.[0]?.value || "";
+  const photos = Array.isArray(profile.photos)
+    ? profile.photos
+    : profile.picture
+    ? [{ value: profile.picture }]
+    : undefined;
+
   res.json({
-    authenticated: req.isAuthenticated?.() || false,
-    user: req.user || null,
+    authenticated: true,
+    user: {
+      // Preserve the full profile shape used by the client
+      ...profile,
+      displayName,
+      email,
+      emails: profile.emails || (email ? [{ value: email }] : undefined),
+      photos,
+      picture: profile.picture || photos?.[0]?.value || null,
+    },
+  });
+});
+
+// Run whitelisted Python lesson scripts or user-submitted code
+app.post("/api/run-python", ensureAuth, express.json(), (req, res) => {
+  const { lesson, code } = req.body || {};
+  const lessonToScript = {
+    print: "python/print_demo.py",
+    if: "python/if_demo.py",
+    for: "python/for_demo.py",
+  };
+
+  const useUserCode = typeof code === "string" && code.trim().length > 0;
+
+  if (useUserCode && code.length > 2000) {
+    return res.status(400).json({ error: "Code too long (2000 char limit)" });
+  }
+
+  let proc;
+  if (useUserCode) {
+    // Run inline user code safely with -c (still not sandboxed; meant for demo)
+    proc = spawn("python3", ["-c", code], {
+      cwd: __dirname,
+    });
+  } else {
+    const script = lessonToScript[lesson];
+    if (!script) {
+      return res.status(400).json({ error: "Unknown lesson" });
+    }
+    proc = spawn("python3", [path.join(__dirname, script)], {
+      cwd: __dirname,
+    });
+  }
+
+  let stdout = "";
+  let stderr = "";
+
+  proc.stdout.on("data", (data) => (stdout += data.toString()));
+  proc.stderr.on("data", (data) => (stderr += data.toString()));
+
+  proc.on("close", (code) => {
+    if (code !== 0) {
+      return res
+        .status(500)
+        .json({ error: stderr.trim() || "Python process failed" });
+    }
+    res.json({ output: stdout.trim() });
   });
 });
 
@@ -139,6 +219,11 @@ app.get(
 // Protected Dashboard Route
 app.get("/login/dashboard.html", ensureAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "login", "dashboard.html"));
+});
+
+// Protected Python course page
+app.get("/login/python-course.html", ensureAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, "login", "python-course.html"));
 });
 
 // Logout

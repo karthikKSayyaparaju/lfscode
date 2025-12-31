@@ -130,32 +130,18 @@
 </head>
 
 <body>
-  <!-- Top Nav -->
-  <header class="topbar">
-    <div class="container nav">
-      <a class="brand" href="#">
-        <span class="brand-name">LearnFromScratch</span>
-      </a>
-
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-        ☰
-      </button>
-
-      <nav class="nav-links" id="navLinks">
-        <a href="#">Problems</a>
-        <a href="#">Courses</a>
-        <a href="#">Resources</a>
-        <a href="#">Pricing</a>
-        <a href="#">Data Access</a>
-      </nav>
-
-      <div class="nav-actions" id="navActions">
-        <!-- ✅ Will be replaced by JS to "Logout" only when authenticated -->
-        <a class="link" id="authLink" href="/login">Logout</a>
-        <a class="btn btn-outline" href="#">Request Demo</a>
-      </div>
-    </div>
-  </header>
+  <script>
+    window.__HEADER_CONFIG__ = {
+      navLinks: [
+        { href: "#", label: "Problems" },
+        { href: "#", label: "Courses" },
+        { href: "#", label: "Resources" },
+        { href: "#", label: "Pricing" },
+        { href: "#", label: "Data Access" },
+      ],
+    };
+  </script>
+  <div id="headerMount"></div>
 
   <!-- Hero -->
   <main class="hero">
@@ -183,8 +169,8 @@
             </div>
             <p class="course-desc">Syntax, loops, functions, I/O, and fundamentals with quick checks.</p>
             <div class="course-actions">
-              <a class="mini-btn primary" href="#">Open</a>
-              <a class="mini-btn" href="#">Syllabus</a>
+              <a class="mini-btn primary" href="/login/python-course.html">Open</a>
+              <a class="mini-btn" href="/login/python-course.html#outline">Syllabus</a>
             </div>
           </div>
 

@@ -8,76 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
-  <style>
-    body { background: #f8fafc; }
-    .courses-shell {
-      display: grid;
-      grid-template-columns: 280px 1fr 320px;
-      gap: 18px;
-      padding: 18px 0 60px;
-    }
-    .rail {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 90px;
-      align-self: start;
-    }
-    .rail h3 { margin: 0 0 6px; font-weight: 800; }
-    .rail p { margin: 0 0 10px; opacity: 0.82; font-weight: 600; }
-    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 0; }
-    .pill-tag {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #e0f2fe;
-      color: #075985;
-      font-weight: 700;
-      font-size: 12px;
-    }
-    .topics {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
-      min-height: 60vh;
-    }
-    .topics h2 { margin: 0 0 12px; font-weight: 800; }
-    .topic-card {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid #e2e8f0;
-      background: #fff;
-      margin-bottom: 10px;
-      transition: transform 120ms ease, box-shadow 160ms ease;
-    }
-    .topic-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-    }
-    .topic-title { margin: 0; font-weight: 800; }
-    .topic-desc { margin: 4px 0 0; opacity: 0.8; font-weight: 600; }
-    .topic-meta { display: flex; gap: 8px; align-items: center; font-weight: 700; opacity: .78; }
-    .topic-link a { color: var(--btn); font-weight: 800; }
-    .right-rail {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
-      min-height: 240px;
-    }
-    @media (max-width: 1100px) {
-      .courses-shell { grid-template-columns: 1fr; }
-      .rail, .right-rail { position: static; }
-    }
-  </style>
 </head>
 <body>
   <script>
@@ -96,8 +26,8 @@
 
   <div class="container">
     <div style="padding: 12px 0 6px;">
-      <h1 style="margin:0; font-weight:800;">Python Foundations</h1>
-      <p style="margin:6px 0 0; opacity:.82; font-weight:600;">Pick a topic to open a dedicated page with description + runnable code.</p>
+      <h1 style="margin:0; font-weight:200;">Python Foundations</h1>
+      <p style="margin:6px 0 0; opacity:.82; font-weight:300;">Pick a topic to open a dedicated page with description + runnable code.</p>
     </div>
 
     <div class="courses-shell">
@@ -119,9 +49,9 @@
       </section>
 
       <aside class="right-rail">
-        <h3 style="margin:0 0 6px; font-weight:800;">Progress</h3>
-        <p style="margin:0 0 10px; opacity:.82; font-weight:600;">Track completion as you go.</p>
-        <div style="display:flex; flex-direction:column; gap:8px; font-weight:700; opacity:.82;">
+        <h3>Progress</h3>
+        <p>Track completion as you go.</p>
+        <div style="display:flex; flex-direction:column; gap:8px; font-weight:200; opacity:.82;">
           <span>Print statements</span>
           <span>If statements</span>
           <span>For loops</span>

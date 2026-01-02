@@ -1,0 +1,21 @@
+{
+  "id": "practice",
+  "title": "Practice drills",
+  "syllabusDesc": "Apply arrays, stacks/queues, linked lists, and hash maps in small tasks.",
+  "inlineSample": "from collections import deque\n\n# rotate queue\nq = deque([1, 2, 3, 4])\nq.append(q.popleft())\nprint(list(q))  # [2, 3, 4, 1]",
+  "desc": "Use these drills to test your intuition about when to use each structure and how operations behave.",
+  "placeholder": "# 1) Use a stack to reverse a string\ntext = \"datastructures\"\nstack = []\n\n# your code here\n",
+  "solution": "# 1) Reverse a string with a stack\ntext = \"datastructures\"\nstack = []\nfor ch in text:\n    stack.append(ch)\nreversed_text = \"\".join(reversed(stack))\nprint(\"reversed:\", reversed_text)\n\n# 2) Queue for BFS-like visitation\nfrom collections import deque\nneighbors = {\"A\": [\"B\", \"C\"], \"B\": [\"D\"], \"C\": [], \"D\": []}\nvisited = []\nq = deque([\"A\"])\nwhile q:\n    node = q.popleft()\n    visited.append(node)\n    q.extend(neighbors.get(node, []))\nprint(\"bfs order:\", visited)\n\n# 3) Hash map frequency\nnums = [1, 2, 2, 3, 3, 3]\nfreq = {}\nfor n in nums:\n    freq[n] = freq.get(n, 0) + 1\nprint(\"freq:\", freq)\n",
+  "difficulty": "medium",
+  "techniques": [
+    "Choose the right structure for access vs insertion patterns",
+    "Implement stack/queue with list vs deque",
+    "Use dicts for counting and membership checks"
+  ],
+  "challenges": [
+    "Detect a cycle in a linked list (fast/slow pointers)",
+    "Implement a min stack that tracks the minimum in O(1)",
+    "Use a queue to check if a graph is bipartite (two-color BFS)"
+  ],
+  "notes": "Before coding, state which operations need to be fast; pick the structure that optimizes those operations.\n\nFor linked-list drills, diagram the pointers before modifying them."
+}

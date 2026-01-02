@@ -17,13 +17,48 @@
     "Using else with for loops"
   ],
   "challenges": [
-    "Print all even numbers from 1 to 50",
-    "Sum all numbers in a list",
-    "Count how many times a value appears in a list",
-    "Reverse a string using a loop",
-    "Create a multiplication table using nested loops",
-    "Find the largest number in a list",
-    "Skip numbers divisible by 3 using continue"
+    {
+      "id": "evens",
+      "title": "Print even numbers 1-50",
+      "prompt": "Loop from 1 to 50 and print only even numbers on separate lines.",
+      "starter": "for n in range(1, 51):\n    # your code here\n    pass\n"
+    },
+    {
+      "id": "sum-list",
+      "title": "Sum all numbers in a list",
+      "prompt": "Given nums = [3, 8, 2, 5], compute the total using a for loop.",
+      "starter": "nums = [3, 8, 2, 5]\n# your code here\n"
+    },
+    {
+      "id": "freq-count",
+      "title": "Count occurrences",
+      "prompt": "Count how many times each item appears in items = ['a','b','a','c','b','a'] and print the counts dict.",
+      "starter": "items = ['a','b','a','c','b','a']\ncounts = {}\n# your code here\n"
+    },
+    {
+      "id": "reverse-string",
+      "title": "Reverse a string",
+      "prompt": "Reverse the string 'for loop' using only a for loop (no slicing or reversed()).",
+      "starter": "text = 'for loop'\nreversed_text = ''\n# your code here\n"
+    },
+    {
+      "id": "multiplication-table",
+      "title": "Multiplication table",
+      "prompt": "Print a 3x3 multiplication table using nested loops.",
+      "starter": "# your code here\n"
+    },
+    {
+      "id": "largest-number",
+      "title": "Find the largest number",
+      "prompt": "Find the largest number in nums = [9, 2, 17, 4, 6] without using max().",
+      "starter": "nums = [9, 2, 17, 4, 6]\n# your code here\n"
+    },
+    {
+      "id": "skip-divisible",
+      "title": "Skip numbers divisible by 3",
+      "prompt": "Loop 1-15 and print numbers that are not divisible by 3 using continue.",
+      "starter": "for n in range(1, 16):\n    # your code here\n    pass\n"
+    }
   ],
   "notes": "Avoid modifying a list while iterating over it.\n\nIf a loop becomes complex, consider breaking it into smaller steps or using helper functions.\n\nFor many cases, Python list comprehensions can replace simple loops for cleaner code."
 }

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Overview • LearnFromScratch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body { background-color: #f8fafc; background-image: var(--bg-pattern); }
+    .overview-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 18px;
+      padding: 18px 0 60px;
+    }
+    .main-stack { display: flex; flex-direction: column; gap: 16px; }
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+    }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      opacity: 0.65;
+      margin: 0 0 6px;
+      font-weight: 600;
+    }
+    .lede { margin: 8px 0 12px; opacity: 0.84; font-weight: 300; }
+    .meta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+    .meta-block {
+      padding: 10px 12px;
+      border: 1px dashed #e2e8f0;
+      border-radius: 12px;
+      min-width: 140px;
+    }
+    .meta-value { margin: 0; font-weight: 700; font-size: 22px; }
+    .meta-label { margin: 0; opacity: 0.7; font-weight: 300; font-size: 13px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    .pill-row { margin-top: 6px; }
+    .topic-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    .overview-topic {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      background: #fff;
+    }
+    .overview-topic h4 { margin: 0; font-weight: 500; }
+    .overview-topic p { margin: 4px 0 0; opacity: 0.82; font-weight: 300; }
+    .text-link { text-decoration: underline; text-underline-offset: 3px; }
+    .text-link:hover { color: var(--accent); }
+    .side-card { position: sticky; top: 90px; align-self: start; }
+    @media (max-width: 1100px) {
+      .overview-shell { grid-template-columns: 1fr; }
+      .side-card { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.__HEADER_CONFIG__ = {
+      navLinks: [
+        { href: "/login/dashboard.html", label: "Dashboard" },
+        { href: "/login/courses.html", label: "Courses" },
+      ],
+      actionButtons: [
+        { href: "/login/courses.html", label: "Back to courses", className: "btn btn-outline" },
+      ],
+      hideAuthLink: true,
+    };
+  </script>
+  <div id="headerMount"></div>
+
+  <div class="container">
+    <div class="overview-shell">
+      <div class="main-stack">
+        <section class="card">
+          <p class="eyebrow">Course overview</p>
+          <h1 id="courseTitle" style="margin:0; font-weight:200;">Course</h1>
+          <p class="lede" id="courseSummary">Loading course details...</p>
+          <div class="pill-row" id="tagRow"></div>
+          <div class="meta-row">
+            <div class="meta-block">
+              <p class="meta-value" id="topicCount">--</p>
+              <p class="meta-label">Topics included</p>
+            </div>
+            <div class="meta-block">
+              <p class="meta-value" id="courseFocus">—</p>
+              <p class="meta-label">Focus area</p>
+            </div>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-solid" id="startCourse" href="#">Start course</a>
+            <a class="btn btn-outline" id="viewTopics" href="#">Browse topics</a>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3 style="margin:0 0 8px;">What you'll learn</h3>
+          <p id="syllabusIntro" style="margin:0 0 10px; opacity:0.84; font-weight:300;">Loading syllabus...</p>
+          <div class="pill-row" id="outlinePills"></div>
+        </section>
+
+        <section class="card">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+            <h3 style="margin:0;">Topics in this course</h3>
+            <a id="topicsCta" class="text-link" href="#">View all topics</a>
+          </div>
+          <div class="topic-list" id="topicsList"></div>
+        </section>
+      </div>
+
+      <aside class="card side-card">
+        <h4 style="margin:0 0 8px;">How this course works</h4>
+        <p style="margin:0 0 10px; opacity:0.84; font-weight:300;">Pick a topic to read the description, then run code on the right side of the lesson page.</p>
+        <div style="display:flex; flex-direction:column; gap:8px; font-weight:300;">
+          <span>• Short lessons you can finish quickly</span>
+          <span>• Runnable code for every topic</span>
+          <span>• Jump between topics anytime</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="/script.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const selectedCourse = params.get("course") || "python";
+
+    async function loadOverview() {
+      const courseRes = await fetch("/data/courses.json", { cache: "no-cache" });
+      if (!courseRes.ok) return;
+      const { courses = [] } = await courseRes.json();
+      const course = courses.find((c) => c.id === selectedCourse) || courses[0];
+      if (!course) return;
+
+      document.getElementById("courseTitle").textContent = course.title;
+      document.getElementById("courseSummary").textContent = course.summary || "Course summary coming soon.";
+
+      const tagRow = document.getElementById("tagRow");
+      tagRow.innerHTML = "";
+      (course.tags || []).forEach((tag) => {
+        const pill = document.createElement("span");
+        pill.className = "pill-tag";
+        pill.textContent = tag;
+        tagRow.appendChild(pill);
+      });
+      document.getElementById("courseFocus").textContent = course.tags?.[0] || "Hands-on practice";
+
+      const manifestUrl = course.topicsManifest || `/data/topics/${course.id}/index.json`;
+      const manifestRes = await fetch(manifestUrl, { cache: "no-cache" });
+      let manifest = null;
+      if (manifestRes.ok) {
+        manifest = await manifestRes.json();
+      }
+
+      if (manifest?.syllabusIntro) {
+        document.getElementById("syllabusIntro").textContent = manifest.syllabusIntro;
+      }
+      const outlinePills = document.getElementById("outlinePills");
+      outlinePills.innerHTML = "";
+      (manifest?.navLinks || [])
+        .filter((link) => link.label && link.label.toLowerCase() !== "outline")
+        .forEach((link) => {
+          const pill = document.createElement("span");
+          pill.className = "pill-tag";
+          pill.textContent = link.label;
+          outlinePills.appendChild(pill);
+        });
+
+      const topicFiles = manifest?.topicFiles || [];
+      const basePath = manifest?.basePath || `/data/topics/${course.id}/`;
+      const lessons = (
+        await Promise.all(
+          topicFiles.map(async (file) => {
+            const res = await fetch(`${basePath}${file}`, { cache: "no-cache" });
+            if (!res.ok) return null;
+            return res.json();
+          })
+        )
+      ).filter(Boolean);
+
+      document.getElementById("topicCount").textContent = lessons.length || topicFiles.length || "0";
+
+      const topicsList = document.getElementById("topicsList");
+      topicsList.innerHTML = "";
+      lessons.forEach((lesson) => {
+        const article = document.createElement("article");
+        article.className = "overview-topic";
+        article.innerHTML = `
+          <div>
+            <h4>${lesson.title}</h4>
+            <p>${lesson.desc || lesson.syllabusDesc || ""}</p>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <a class="text-link" href="/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(lesson.id)}">Open lesson</a>
+          </div>
+        `;
+        topicsList.appendChild(article);
+      });
+
+      const firstLesson = lessons[0];
+      const fallbackCourseHref = `/login/courses.html?course=${encodeURIComponent(course.id)}`;
+      const startHref = firstLesson
+        ? `/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(firstLesson.id)}`
+        : fallbackCourseHref;
+      const startCourseLink = document.getElementById("startCourse");
+      startCourseLink.href = startHref;
+
+      const viewTopicsLink = document.getElementById("viewTopics");
+      viewTopicsLink.href = fallbackCourseHref;
+
+      const topicsCta = document.getElementById("topicsCta");
+      topicsCta.href = fallbackCourseHref;
+    }
+
+    document.addEventListener("DOMContentLoaded", loadOverview);
+  </script>
+</body>
+</html>

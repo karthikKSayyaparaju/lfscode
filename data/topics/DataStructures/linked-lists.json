@@ -1,0 +1,21 @@
+{
+  "id": "linked",
+  "title": "Singly linked lists",
+  "syllabusDesc": "Link nodes together so inserts/removals in the middle stay O(1).",
+  "inlineSample": "class Node:\n    def __init__(self, value, next=None):\n        self.value = value\n        self.next = next\n\nhead = Node(1, Node(2, Node(3)))\ncurrent = head\nwhile current:\n    print(current.value)\n    current = current.next",
+  "desc": "A linked list stores each element in a node that points to the next node. It trades fast middle inserts/removals for slower indexing (O(n)).",
+  "placeholder": "class Node:\n    def __init__(self, value, next=None):\n        self.value = value\n        self.next = next\n\n# Build 3 nodes and traverse them\n",
+  "solution": "class Node:\n    def __init__(self, value, next=None):\n        self.value = value\n        self.next = next\n\n# Build list: 1 -> 2 -> 4\nhead = Node(1, Node(2, Node(4)))\n\n# Insert 3 after 2\ncurrent = head\nwhile current:\n    if current.value == 2:\n        current.next = Node(3, current.next)\n        break\n    current = current.next\n\n# Traverse\ncurrent = head\nvalues = []\nwhile current:\n    values.append(current.value)\n    current = current.next\nprint(values)\n",
+  "difficulty": "medium",
+  "techniques": [
+    "Traverse with a while loop and a cursor pointer",
+    "Insert by rewiring next pointers",
+    "Track head/tail when adding or removing nodes"
+  ],
+  "challenges": [
+    "Delete a node with a given value (handle head separately)",
+    "Find the middle of a list with slow/fast pointers",
+    "Reverse a linked list iteratively"
+  ],
+  "notes": "Indexing is O(n); use only when frequent middle inserts/removals justify it.\n\nBe careful to keep references when rewiring next pointers."
+}

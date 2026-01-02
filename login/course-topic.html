@@ -122,6 +122,26 @@
       border-color: var(--accent);
       color: #fff;
     }
+    .challenge-link {
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: var(--btn);
+      font: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+    .challenge-link:hover { color: var(--accent); }
+    .challenge-banner {
+      border: 1px dashed #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      margin: 8px 0;
+    }
+    .challenge-banner h4 { margin: 0 0 4px; font-weight: 600; font-size: 14px; }
+    .challenge-banner p { margin: 0; opacity: 0.86; font-weight: 300; }
     @media (max-width: 1024px) {
       .topic-shell { grid-template-columns: 1fr; }
     }
@@ -176,6 +196,10 @@
       <section class="card code-panel">
         <div class="pill-row" id="topicTabs"></div>
         <label for="code-editor"><strong>Try it yourself</strong></label>
+        <div id="challengeBanner" class="challenge-banner is-hidden">
+          <h4 id="challengeTitle">Challenge</h4>
+          <p id="challengePrompt">Solve the prompt, then run your code.</p>
+        </div>
         <textarea id="code-editor" class="code-input" spellcheck="false"></textarea>
         <div class="btn-row">
           <button class="btn btn-outline" id="runUser">Run your code</button>
@@ -196,6 +220,8 @@
     let lessons = [];
     let currentLesson = params.get("lesson") || null;
     const solutionCache = {};
+    let currentChallenges = [];
+    let activeChallenge = null;
 
     function pickDefaultLesson() {
       return currentLesson || (lessons[0] ? lessons[0].id : "print");
@@ -278,17 +304,58 @@
       toggleSection("techniquesSection", items.length > 0);
     }
 
+    function resetChallengeState() {
+      activeChallenge = null;
+      currentChallenges = [];
+      const banner = document.getElementById("challengeBanner");
+      if (banner) banner.classList.add("is-hidden");
+    }
+
+    function showChallenge(idx) {
+      const data = currentChallenges[idx];
+      if (!data) return;
+      activeChallenge = data;
+      const banner = document.getElementById("challengeBanner");
+      const title = document.getElementById("challengeTitle");
+      const prompt = document.getElementById("challengePrompt");
+      const editor = document.getElementById("code-editor");
+      if (title) title.textContent = data.title || "Challenge";
+      if (prompt) prompt.textContent = data.prompt || data.title || "";
+      if (banner) banner.classList.remove("is-hidden");
+      if (editor) {
+        editor.value = data.starter || "";
+        if (data.starter || data.prompt) {
+          editor.placeholder = data.starter || data.prompt;
+        }
+      }
+    }
+
     function renderChallenges(list) {
       const ul = document.getElementById("challengesList");
       if (!ul) return;
       ul.innerHTML = "";
-      const items = Array.isArray(list) ? list.filter(Boolean) : [];
-      items.forEach((item) => {
+      const normalize = (item) => {
+        if (typeof item === "string") {
+          return { title: item, prompt: item, starter: "" };
+        }
+        return {
+          title: item.title || item.prompt || "Challenge",
+          prompt: item.prompt || item.title || "",
+          starter: item.starter || "",
+        };
+      };
+      currentChallenges = Array.isArray(list) ? list.filter(Boolean).map(normalize) : [];
+      currentChallenges.forEach((item, idx) => {
         const li = document.createElement("li");
-        li.textContent = item;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "challenge-link";
+        btn.dataset.challengeIndex = String(idx);
+        btn.textContent = item.title;
+        li.appendChild(btn);
         ul.appendChild(li);
       });
-      toggleSection("challengesSection", items.length > 0);
+      toggleSection("challengesSection", currentChallenges.length > 0);
     }
 
     function renderNotes(notes) {
@@ -311,6 +378,7 @@
       setDifficulty(lesson.difficulty);
       renderInlineSample(lesson.inlineSample);
       renderTechniques(lesson.techniques);
+      resetChallengeState();
       renderChallenges(lesson.challenges);
       renderNotes(lesson.notes);
       document.getElementById("code-editor").placeholder = lesson.placeholder || "";
@@ -387,6 +455,12 @@
         if (e.target.matches("[data-lesson]")) {
           setLesson(e.target.dataset.lesson);
         }
+      });
+      document.getElementById("challengesList").addEventListener("click", (e) => {
+        const target = e.target.closest("[data-challenge-index]");
+        if (!target) return;
+        const idx = Number(target.dataset.challengeIndex);
+        showChallenge(idx);
       });
 
       document.getElementById("runUser").addEventListener("click", () => runLesson(false));

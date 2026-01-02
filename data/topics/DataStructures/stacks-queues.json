@@ -1,0 +1,21 @@
+{
+  "id": "stacks",
+  "title": "Stacks and queues",
+  "syllabusDesc": "Add/remove from one end (stack) or opposite ends (queue).",
+  "inlineSample": "stack = []\nstack.append(\"first\")\nstack.append(\"second\")\nprint(stack.pop())  # second\n\nfrom collections import deque\nq = deque([\"a\", \"b\"])\nq.append(\"c\")\nprint(q.popleft())  # a",
+  "desc": "Stacks are LIFO (last-in, first-out), great for undo, parsing, and DFS. Queues are FIFO (first-in, first-out), great for scheduling and BFS.",
+  "placeholder": "# Build a tiny stack and queue\nstack = []\nqueue = []\n\n# your code here\n",
+  "solution": "stack = []\nstack.append(\"nav-home\")\nstack.append(\"nav-profile\")\nprint(\"stack pop:\", stack.pop())  # remove last\nprint(\"stack now:\", stack)\n\nfrom collections import deque\nqueue = deque()\nqueue.append(\"task1\")\nqueue.append(\"task2\")\nqueue.appendleft(\"urgent\")\nprint(\"queue pop left:\", queue.popleft())\nprint(\"queue now:\", list(queue))\n",
+  "difficulty": "easy",
+  "techniques": [
+    "Use list append/pop for stack operations",
+    "Use collections.deque for O(1) queue operations at both ends",
+    "Map real problems (undo, BFS) to stack/queue choices"
+  ],
+  "challenges": [
+    "Check for balanced parentheses with a stack",
+    "Simulate printer jobs with a queue",
+    "Implement a browser back/forward history with two stacks"
+  ],
+  "notes": "list.pop(0) is O(n); use deque for fast left pops/appends.\n\nKeep APIs small: push/pop for stacks, enqueue/dequeue for queues."
+}

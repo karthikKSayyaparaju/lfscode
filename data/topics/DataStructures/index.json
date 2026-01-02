@@ -1,0 +1,22 @@
+{
+  "courseId": "DataStructures",
+  "courseTitle": "Data Structures with Python",
+  "lede": "Understand core structures, when to use them, and how operations scale.",
+  "syllabusIntro": "Start with the why, then practice arrays/lists, stacks, queues, linked lists, and hash maps.",
+  "navLinks": [
+    { "href": "#overview", "label": "Overview" },
+    { "href": "#arrays", "label": "Arrays & lists" },
+    { "href": "#stacks", "label": "Stacks & queues" },
+    { "href": "#linked", "label": "Linked lists" },
+    { "href": "#hash-maps", "label": "Hash maps" },
+    { "href": "#practice", "label": "Practice" }
+  ],
+  "topicFiles": [
+    "ds-overview.json",
+    "arrays-lists.json",
+    "stacks-queues.json",
+    "linked-lists.json",
+    "hash-maps.json",
+    "practice.json"
+  ]
+}

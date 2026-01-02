@@ -1,0 +1,22 @@
+{
+  "id": "hash-maps",
+  "title": "Hash maps (dict)",
+  "syllabusDesc": "Key/value lookups with average O(1) inserts, updates, and reads.",
+  "inlineSample": "prices = {\"apple\": 1.25, \"banana\": 0.85}\nprices[\"pear\"] = 1.50\nprint(prices.get(\"apple\"))\nprint(\"pear\" in prices)",
+  "desc": "Hash maps store data by hashing a key to a bucket. Python dicts keep insertion order, handle collisions internally, and deliver fast average-case lookups.",
+  "placeholder": "# Build a small dict and query it\nscores = {}\n\n# your code here\n",
+  "solution": "scores = {\"ada\": 95, \"alan\": 88}\nscores[\"grace\"] = 99\nscores[\"alan\"] = 90  # update\n\nprint(\"alan score:\", scores.get(\"alan\"))\nprint(\"contains ada?\", \"ada\" in scores)\n\n# iterate in insertion order\nfor name, score in scores.items():\n    print(name, score)\n",
+  "difficulty": "easy",
+  "techniques": [
+    "Create, update, and delete dict entries",
+    "Membership tests and safe reads with get",
+    "Iterate over keys, values, and items",
+    "Choose keys that are hashable and stable"
+  ],
+  "challenges": [
+    "Count word frequencies from a sentence",
+    "Invert a mapping from name->team to team->names",
+    "Merge two dicts where the second overrides the first"
+  ],
+  "notes": "Average lookups are O(1); worst-case can degrade if many keys collide.\n\nKeys must be hashable (immutable types like str, int, tuple)."
+}

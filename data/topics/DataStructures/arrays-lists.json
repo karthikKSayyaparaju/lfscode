@@ -1,0 +1,22 @@
+{
+  "id": "arrays",
+  "title": "Arrays & Python lists",
+  "syllabusDesc": "Store ordered items, index quickly, and resize as needed.",
+  "inlineSample": "nums = [3, 1, 4]\nnums.append(1)\nnums[0] = 2\nprint(nums)\nprint(nums[-1])",
+  "desc": "Python lists are dynamic arrays: they keep elements contiguous in memory, giving O(1) average time for indexing and append, with O(n) inserts/removes in the middle.",
+  "placeholder": "# Add, update, and slice\nnums = [10, 20, 30]\n\n# your code here\n",
+  "solution": "nums = [10, 20, 30]\nnums.append(40)\nnums.insert(1, 15)\nnums[2] = 25\nprint(\"list:\", nums)\n\n# slice copy\nfirst_two = nums[:2]\nprint(\"first two:\", first_two)\n\n# remove last\nlast = nums.pop()\nprint(\"popped:\", last)\nprint(\"after pop:\", nums)\n",
+  "difficulty": "easy",
+  "techniques": [
+    "Indexing and slicing lists",
+    "append, insert, pop, remove operations",
+    "Using list comprehensions for transforms",
+    "When to copy vs mutate a list"
+  ],
+  "challenges": [
+    "Reverse a list without using list.reverse()",
+    "Merge two sorted lists into one sorted list",
+    "Remove duplicates while keeping order"
+  ],
+  "notes": "Indexing is O(1); inserting in the middle is O(n) because elements shift.\n\nLists keep insertion order and allow duplicates."
+}

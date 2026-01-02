@@ -1,0 +1,21 @@
+{
+  "id": "practice",
+  "title": "Practice challenges",
+  "syllabusDesc": "Small exercises that mix printing, loops, conditionals, and collections.",
+  "inlineSample": "words = [\"apple\", \"avocado\", \"banana\"]\nfor w in words:\n    if w.startswith(\"a\"):\n        print(w.upper())",
+  "desc": "Use these prompts to combine the basics you've learned. Run your code on the right, and reveal our solutions if you get stuck.",
+  "placeholder": "# Count how many words start with 'a'\nwords = [\"apple\", \"avocado\", \"banana\", \"apricot\"]\n\n# your code here\n",
+  "solution": "# 1) Count words starting with 'a'\nwords = [\"apple\", \"avocado\", \"banana\", \"apricot\"]\ncount_a = 0\nfor w in words:\n    if w.startswith(\"a\"):\n        count_a += 1\nprint(\"words starting with a:\", count_a)\n\n# 2) Sum even numbers\nnums = [3, 8, 12, 5, 4]\nsum_evens = 0\nfor n in nums:\n    if n % 2 == 0:\n        sum_evens += n\nprint(\"sum evens:\", sum_evens)\n\n# 3) Build frequency dict\ntext = \"ada likes algorithms\"\ncounts = {}\nfor ch in text:\n    counts[ch] = counts.get(ch, 0) + 1\nprint(counts)\n",
+  "difficulty": "easy",
+  "techniques": [
+    "Combine loops + conditionals",
+    "Use list and dict operations together",
+    "Iterate with range or direct over items"
+  ],
+  "challenges": [
+    "Reverse a string without using slicing",
+    "Find the largest number in a list without max()",
+    "Build a dict of word counts from a sentence"
+  ],
+  "notes": "Tackle one prompt at a time; print intermediate values to debug.\n\nPrefer readable variable names and small helper functions when solutions grow."
+}

@@ -8,6 +8,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <style>
+    .rail-link { text-decoration: underline; text-underline-offset: 4px; }
+    .rail-link:hover { color: var(--accent); }
+  </style>
 </head>
 <body>
   <script>
@@ -32,11 +36,12 @@
 
     <div class="courses-shell">
       <aside class="rail">
-        <h3>Course overview</h3>
+        <h3><a id="courseOverviewLink" class="rail-link" href="#">Course overview</a></h3>
         <p id="courseSummary">Loading...</p>
         <div class="pill-row" id="pillRow"></div>
         <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
           <a class="btn btn-outline" id="startTopic" href="#">Start first topic</a>
+          <a class="btn btn-solid" id="practiceLink" href="#">Practice challenges</a>
         </div>
       </aside>
 
@@ -69,6 +74,12 @@
       document.getElementById("courseLede").textContent =
         "Pick a topic to open a dedicated page with description + runnable code.";
       document.getElementById("courseSummary").textContent = course.summary || "";
+
+      const overviewLink = document.getElementById("courseOverviewLink");
+      if (overviewLink) {
+        overviewLink.href = `/login/course-overview.html?course=${encodeURIComponent(course.id)}`;
+        overviewLink.setAttribute("aria-label", `${course.title} overview`);
+      }
 
       const pillRow = document.getElementById("pillRow");
       pillRow.innerHTML = "";
@@ -126,8 +137,21 @@
         progressList.appendChild(span);
       });
 
-      if (lessons[0]) {
-        document.getElementById("startTopic").href = `/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(lessons[0].id)}`;
+      const startBtn = document.getElementById("startTopic");
+      const practiceBtn = document.getElementById("practiceLink");
+      const firstLesson = lessons[0];
+      const practiceLesson = lessons.find((l) => l.id.toLowerCase().includes("practice"));
+
+      if (firstLesson && startBtn) {
+        startBtn.href = `/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(firstLesson.id)}`;
+      }
+      if (practiceBtn) {
+        const targetLesson = practiceLesson || firstLesson;
+        if (targetLesson) {
+          practiceBtn.href = `/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(targetLesson.id)}`;
+        } else {
+          practiceBtn.style.display = "none";
+        }
       }
     }
 

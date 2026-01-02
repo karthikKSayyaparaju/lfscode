@@ -1,0 +1,21 @@
+{
+  "id": "overview",
+  "title": "Why data structures + Big O basics",
+  "syllabusDesc": "See how structure choice changes speed and memory, and read Big O at a glance.",
+  "inlineSample": "items = [1, 2, 3]\nprint(3 in items)  # O(n) scan\n\ncounts = {\"a\": 2, \"b\": 1}\nprint(counts.get(\"a\", 0))  # O(1) average lookup",
+  "desc": "Data structures decide how data is laid out in memory and what each operation costs. Big O notation gives a rough feel for how work grows as inputs get larger.\n\nPick the simplest structure that keeps your critical operations cheap.",
+  "placeholder": "# Try measuring rough runtime differences\nimport time\n\nnumbers = list(range(10000))\nstart = time.time()\nfor _ in range(1000):\n    9999 in numbers\nprint(\"list membership took\", time.time() - start)\n",
+  "solution": "import time\n\n# Compare membership on list vs set\nnumbers = list(range(10000))\nnums_set = set(numbers)\n\nstart = time.time()\nfor _ in range(1000):\n    9999 in numbers\nprint(\"list membership took\", round(time.time() - start, 4), \"seconds\")\n\nstart = time.time()\nfor _ in range(1000):\n    9999 in nums_set\nprint(\"set membership took\", round(time.time() - start, 4), \"seconds\")\n\nprint(\"Big O takeaway: list membership ~O(n); set/dict membership ~O(1) average.\")\n",
+  "difficulty": "easy",
+  "techniques": [
+    "Estimate time vs space costs with Big O notation",
+    "Favor the simplest structure that keeps critical operations fast",
+    "Translate requirements (fast lookup? ordered iteration?) into structure choice"
+  ],
+  "challenges": [
+    "List 3 daily-life examples of when you need fast lookup vs fast ordering",
+    "Show an O(n) vs O(1) difference for membership using a larger input size",
+    "Explain why a sorted list might beat a hash table for small data"
+  ],
+  "notes": "Big O is a growth rate, not a stopwatch. Constant factors matter for small inputs.\n\nPrefer readability first; optimize when you know which operation matters most."
+}

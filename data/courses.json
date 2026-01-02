@@ -21,6 +21,17 @@
       "topicPage": "/login/course-topic.html",
       "topicsManifest": "/data/topics/ML/index.json",
       "primaryColor": "#16a34a"
+    },
+    {
+      "id": "DataStructures",
+      "title": "Data Structures Basics",
+      "summary": "Big O intuition, arrays/lists, stacks, queues, linked lists, and hash maps in Python.",
+      "pill": "Beginner",
+      "tags": ["Beginner", "Data structures", "Python 3"],
+      "cta": "/login/courses.html?course=DataStructures",
+      "topicPage": "/login/course-topic.html",
+      "topicsManifest": "/data/topics/DataStructures/index.json",
+      "primaryColor": "#0ea5e9"
     }
   ]
 }

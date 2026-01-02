@@ -95,5 +95,36 @@
   </main>
 
   <script src="../script.js"></script>
+  <script>
+    async function loadCourses() {
+      const row = document.getElementById("courseRow");
+      if (!row) return;
+      row.innerHTML = "";
+      try {
+        const res = await fetch("/data/courses.json", { cache: "no-cache" });
+        if (!res.ok) throw new Error("courses load failed");
+        const { courses = [] } = await res.json();
+        courses.forEach((course) => {
+          const card = document.createElement("div");
+          card.className = "course-card";
+          card.innerHTML = `
+            <div class="course-top">
+              <h3 class="course-title">${course.title}</h3>
+              <span class="pill">${course.pill || "Start"}</span>
+            </div>
+            <p class="course-desc">${course.summary || ""}</p>
+            <div class="course-actions">
+              <a class="mini-btn primary" href="${course.cta}">Open</a>
+              <a class="mini-btn" href="${course.topicPage || course.cta}">Syllabus</a>
+            </div>
+          `;
+          row.appendChild(card);
+        });
+      } catch (err) {
+        row.innerHTML = "<p style='margin:0;'>Unable to load courses.</p>";
+      }
+    }
+    document.addEventListener("DOMContentLoaded", loadCourses);
+  </script>
 </body>
 </html>

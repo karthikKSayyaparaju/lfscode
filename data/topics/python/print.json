@@ -1,0 +1,15 @@
+{
+  "id": "print",
+  "title": "Print statements",
+  "syllabusDesc": "Send output to the console and combine strings and values.",
+  "inlineSample": "print(\"Hello, world!\")",
+  "details": [
+    "Print literals or variables; print(\"Hi\", name) inserts a space for you.",
+    "Use f\"\" strings to embed expressions inline, e.g., f\"2 + 2 = {2 + 2}\".",
+    "Multiple arguments become space-separated in the output."
+  ],
+  "desc": "Use print() to show strings, numbers, and variables. Great for quick checks.",
+  "placeholder": "print(\"Hello, world!\")",
+  "solution": "print(\"Hello, world!\")\nname = \"Ada\"\nprint(\"Hi\", name)\nprint(f\"2 + 2 = {2 + 2}\")",
+  "difficulty": "easy"
+}

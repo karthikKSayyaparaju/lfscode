@@ -1,0 +1,10 @@
+{
+  "id": "dicts",
+  "title": "Dictionaries",
+  "syllabusDesc": "Key/value storage for fast lookups; use .get to avoid KeyErrors.",
+  "inlineSample": "person = {\"name\":\"Ada\",\"role\":\"dev\"}\nprint(person[\"name\"])",
+  "desc": "Key/value storage; great for lookups. Use .get to avoid KeyErrors.",
+  "placeholder": "person = {'name':'Ada','role':'dev'}\nprint(person['name'])",
+  "solution": "person = {\"name\": \"Ada\", \"role\": \"dev\"}\nprint(person[\"name\"])",
+  "difficulty": "med"
+}

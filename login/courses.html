@@ -26,21 +26,17 @@
 
   <div class="container">
     <div style="padding: 12px 0 6px;">
-      <h1 style="margin:0; font-weight:200;">Python Foundations</h1>
-      <p style="margin:6px 0 0; opacity:.82; font-weight:300;">Pick a topic to open a dedicated page with description + runnable code.</p>
+      <h1 id="courseTitle" style="margin:0; font-weight:200;">Course</h1>
+      <p id="courseLede" style="margin:6px 0 0; opacity:.82; font-weight:300;">Loading course details...</p>
     </div>
 
     <div class="courses-shell">
       <aside class="rail">
         <h3>Course overview</h3>
-        <p>Syntax, control flow, functions, lists, and dictionaries with live code.</p>
-        <div class="pill-row">
-          <span class="pill-tag">Beginner</span>
-          <span class="pill-tag">Hands-on</span>
-          <span class="pill-tag">Python 3</span>
-        </div>
+        <p id="courseSummary">Loading...</p>
+        <div class="pill-row" id="pillRow"></div>
         <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-          <a class="btn btn-outline" href="/login/course-topic.html?lesson=print">Start first topic</a>
+          <a class="btn btn-outline" id="startTopic" href="#">Start first topic</a>
         </div>
       </aside>
 
@@ -51,14 +47,7 @@
       <aside class="right-rail">
         <h3>Progress</h3>
         <p>Track completion as you go.</p>
-        <div style="display:flex; flex-direction:column; gap:8px; font-weight:200; opacity:.82;">
-          <span>Print statements</span>
-          <span>If statements</span>
-          <span>For loops</span>
-          <span>While loops</span>
-          <span>Functions</span>
-          <span>Lists</span>
-          <span>Dictionaries</span>
+        <div id="progressList" style="display:flex; flex-direction:column; gap:8px; font-weight:200; opacity:.82;">
         </div>
       </aside>
     </div>
@@ -66,41 +55,83 @@
 
   <script src="/script.js"></script>
   <script>
-    const TOPICS = [
-      { id: "print", title: "Print statements", desc: "Use print() to show strings, numbers, and variables.", level: "Easy" },
-      { id: "if", title: "If statements", desc: "Branch with if / elif / else to handle choices.", level: "Easy" },
-      { id: "for", title: "For loops", desc: "Loop over lists or ranges to repeat work.", level: "Easy" },
-      { id: "while", title: "While loops", desc: "Repeat while a condition stays true.", level: "Easy" },
-      { id: "funcs", title: "Functions", desc: "Group logic in reusable functions.", level: "Med." },
-      { id: "lists", title: "Lists", desc: "Store ordered items; append, slice, iterate.", level: "Easy" },
-      { id: "dicts", title: "Dictionaries", desc: "Key/value storage for fast lookups.", level: "Med." },
-    ];
+    const params = new URLSearchParams(window.location.search);
+    const selectedCourse = params.get("course") || "python";
 
-    function renderTopics() {
-      const container = document.getElementById("topicsList");
-      if (!container) return;
+    async function loadCourse() {
+      const courseRes = await fetch("/data/courses.json", { cache: "no-cache" });
+      if (!courseRes.ok) return;
+      const { courses = [] } = await courseRes.json();
+      const course = courses.find((c) => c.id === selectedCourse) || courses[0];
+      if (!course) return;
+
+      document.getElementById("courseTitle").textContent = course.title;
+      document.getElementById("courseLede").textContent =
+        "Pick a topic to open a dedicated page with description + runnable code.";
+      document.getElementById("courseSummary").textContent = course.summary || "";
+
+      const pillRow = document.getElementById("pillRow");
+      pillRow.innerHTML = "";
+      (course.tags || []).forEach((tag) => {
+        const span = document.createElement("span");
+        span.className = "pill-tag";
+        span.textContent = tag;
+        pillRow.appendChild(span);
+      });
+
+      const manifestUrl = course.topicsManifest || `/data/topics/${course.id}/index.json`;
+      const manifestRes = await fetch(manifestUrl, { cache: "no-cache" });
+      if (!manifestRes.ok) return;
+      const manifest = await manifestRes.json();
+      const topicFiles = manifest.topicFiles || [];
+      const basePath = manifest.basePath || `/data/topics/${course.id}/`;
+
+      const lessons = (
+        await Promise.all(
+          topicFiles.map(async (file) => {
+            const res = await fetch(`${basePath}${file}`, { cache: "no-cache" });
+            if (!res.ok) return null;
+            return res.json();
+          })
+        )
+      ).filter(Boolean);
+
+      const topicsList = document.getElementById("topicsList");
+      topicsList.innerHTML = "<h2>Topics</h2>";
       const fragment = document.createDocumentFragment();
-      TOPICS.forEach((topic) => {
+      lessons.forEach((lesson) => {
         const card = document.createElement("article");
         card.className = "topic-card";
         card.innerHTML = `
           <div>
-            <p class="topic-title">${topic.title}</p>
-            <p class="topic-desc">${topic.desc}</p>
+            <p class="topic-title">${lesson.title}</p>
+            <p class="topic-desc">${lesson.desc}</p>
             <div class="topic-meta">
-              <span>${topic.level}</span>
+              <span>${lesson.difficulty || ""}</span>
             </div>
           </div>
           <div class="topic-link">
-            <a href="/login/course-topic.html?lesson=${encodeURIComponent(topic.id)}">Open</a>
+            <a href="/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(lesson.id)}">Open</a>
           </div>
         `;
         fragment.appendChild(card);
       });
-      container.appendChild(fragment);
+      topicsList.appendChild(fragment);
+
+      const progressList = document.getElementById("progressList");
+      progressList.innerHTML = "";
+      lessons.forEach((lesson) => {
+        const span = document.createElement("span");
+        span.textContent = lesson.title;
+        progressList.appendChild(span);
+      });
+
+      if (lessons[0]) {
+        document.getElementById("startTopic").href = `/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(lessons[0].id)}`;
+      }
     }
 
-    document.addEventListener("DOMContentLoaded", renderTopics);
+    document.addEventListener("DOMContentLoaded", loadCourse);
   </script>
 </body>
 </html>

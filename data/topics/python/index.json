@@ -1,0 +1,21 @@
+{
+  "courseId": "python",
+  "courseTitle": "Python Foundations",
+  "lede": "Side-by-side learning: pick a topic, read the description, and run the code on the right.",
+  "syllabusIntro": "Syntax, control flow, functions, lists, and dictionaries with live code.",
+  "navLinks": [
+    { "href": "#outline", "label": "Outline" },
+    { "href": "#print", "label": "Print" },
+    { "href": "#if", "label": "If" },
+    { "href": "#for-loop", "label": "For Loop" }
+  ],
+  "topicFiles": [
+    "print.json",
+    "if.json",
+    "for.json",
+    "while.json",
+    "funcs.json",
+    "lists.json",
+    "dicts.json"
+  ]
+}

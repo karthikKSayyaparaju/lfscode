@@ -1,0 +1,10 @@
+{
+  "id": "while",
+  "title": "While loops",
+  "syllabusDesc": "Repeat while a condition stays true; update the condition to avoid infinite loops.",
+  "inlineSample": "count = 0\nwhile count < 3:\n    print(count)\n    count += 1",
+  "desc": "Repeat while a condition stays true; remember to update the condition inside the loop.",
+  "placeholder": "count = 0\nwhile count < 3:\n    print(count)\n    count += 1",
+  "solution": "count = 0\n\nwhile count < 3:\n    print(count)\n    count += 1",
+  "difficulty": "easy"
+}

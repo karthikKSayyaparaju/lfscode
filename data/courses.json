@@ -1,0 +1,26 @@
+{
+  "courses": [
+    {
+      "id": "python",
+      "title": "Python Foundations",
+      "summary": "Syntax, control flow, functions, lists, and dictionaries with live code.",
+      "pill": "Beginner",
+      "tags": ["Beginner", "Hands-on", "Python 3"],
+      "cta": "/login/courses.html?course=python",
+      "topicPage": "/login/course-topic.html",
+      "topicsManifest": "/data/topics/python/index.json",
+      "primaryColor": "#16a34a"
+    },
+    {
+      "id": "ML-basics",
+      "title": "Machine Learning Basics",
+      "summary": "Introduction to machine learning concepts and algorithms.",
+      "pill": "Beginner",
+      "tags": ["Beginner", "Hands-on", "Python 3"],
+      "cta": "/login/courses.html?course=ML-basics",
+      "topicPage": "/login/course-topic.html",
+      "topicsManifest": "/data/topics/ML/index.json",
+      "primaryColor": "#16a34a"
+    }
+  ]
+}

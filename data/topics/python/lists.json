@@ -1,0 +1,10 @@
+{
+  "id": "lists",
+  "title": "Lists",
+  "syllabusDesc": "Ordered collections you can append to and iterate over.",
+  "inlineSample": "nums = [1,2,3]\nnums.append(4)\nfor n in nums:\n    print(n)",
+  "desc": "Store ordered items; index, slice, append, and iterate.",
+  "placeholder": "nums = [1,2,3]\nnums.append(4)\nfor n in nums:\n    print(n)",
+  "solution": "nums = [1, 2, 3]\nnums.append(4)\n\nfor n in nums:\n    print(n)",
+  "difficulty": "easy"
+}

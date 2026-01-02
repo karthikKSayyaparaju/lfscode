@@ -221,9 +221,9 @@ app.get("/login/dashboard.html", ensureAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "login", "dashboard.html"));
 });
 
-// Protected Python course page
+// Legacy python course path -> redirect to data-driven page
 app.get("/login/python-course.html", ensureAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, "login", "python-course.html"));
+  res.redirect("/login/course-topic.html?course=python");
 });
 
 // Logout

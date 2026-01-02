@@ -1,0 +1,10 @@
+{
+  "id": "funcs",
+  "title": "Functions",
+  "syllabusDesc": "Group logic into reusable blocks with parameters and return values.",
+  "inlineSample": "def greet(name):\n    return f\"Hi {name}\"\n\nprint(greet(\"Ada\"))",
+  "desc": "Group logic in reusable functions; use parameters and return values.",
+  "placeholder": "def greet(name):\n    return f\"Hi {name}\"\n\nprint(greet('Ada'))",
+  "solution": "def greet(name):\n    return f\"Hi {name}\"\n\nprint(greet(\"Ada\"))",
+  "difficulty": "med"
+}

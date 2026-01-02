@@ -1,0 +1,10 @@
+{
+  "id": "if",
+  "title": "If statements",
+  "syllabusDesc": "Branch logic with if, elif, and else.",
+  "inlineSample": "score = 82\nif score >= 80:\n    print(\"B or better\")",
+  "desc": "Branch with if / elif / else to handle thresholds or choices.",
+  "placeholder": "score = 50\nif score > 40:\n    print('pass')",
+  "solution": "score = 82\n\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelse:\n    print(\"Keep practicing!\")",
+  "difficulty": "med"
+}

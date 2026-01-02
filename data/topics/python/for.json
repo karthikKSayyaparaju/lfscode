@@ -1,0 +1,29 @@
+{
+  "id": "for",
+  "title": "For loops",
+  "syllabusDesc": "Iterate over sequences or ranges to repeat work.",
+  "inlineSample": "for i in range(3):\n    print(i)",
+  "desc": "A for loop lets you repeat a block of code for each item in a sequence such as a list, string, or range.\n\nYou use for loops when you know how many times an operation should run or when processing each element in a collection.\n\nFor loops make code predictable, readable, and easier to maintain.",
+  "placeholder": "for i in range(5):\n    print(i)",
+  "solution": "nums = [1, 2, 3, 4]\n\nfor n in nums:\n    print(n)\n\n# using range\nfor i in range(3):\n    print(\"loop\", i)",
+  "difficulty": "easy",
+  "techniques": [
+    "Iterating over lists, strings, and ranges",
+    "Using range(start, stop, step)",
+    "Nested for loops",
+    "Using enumerate() for index + value",
+    "Looping over dictionaries (keys, values, items)",
+    "Using break and continue",
+    "Using else with for loops"
+  ],
+  "challenges": [
+    "Print all even numbers from 1 to 50",
+    "Sum all numbers in a list",
+    "Count how many times a value appears in a list",
+    "Reverse a string using a loop",
+    "Create a multiplication table using nested loops",
+    "Find the largest number in a list",
+    "Skip numbers divisible by 3 using continue"
+  ],
+  "notes": "Avoid modifying a list while iterating over it.\n\nIf a loop becomes complex, consider breaking it into smaller steps or using helper functions.\n\nFor many cases, Python list comprehensions can replace simple loops for cleaner code."
+}

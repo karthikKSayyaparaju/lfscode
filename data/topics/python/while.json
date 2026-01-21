@@ -6,5 +6,35 @@
   "desc": "Repeat while a condition stays true; remember to update the condition inside the loop.",
   "placeholder": "count = 0\nwhile count < 3:\n    print(count)\n    count += 1",
   "solution": "count = 0\n\nwhile count < 3:\n    print(count)\n    count += 1",
-  "difficulty": "easy"
+  "difficulty": "easy",
+  "challenges": [
+    {
+      "id": "countdown",
+      "title": "Countdown",
+      "prompt": "Print 5 down to 1 using a while loop, then print \"Blastoff!\".",
+      "starter": "n = 5\n# your code here\n",
+      "solution": "n = 5\nwhile n > 0:\n    print(n)\n    n -= 1\nprint(\"Blastoff!\")\n"
+    },
+    {
+      "id": "guessing-game",
+      "title": "Guessing game",
+      "prompt": "Keep asking for a number until the user types 7, then print \"Correct\".",
+      "starter": "secret = 7\n# your code here\n",
+      "solution": "secret = 7\nguess = None\nwhile guess != secret:\n    guess = int(input(\"Guess: \"))\nprint(\"Correct\")\n"
+    },
+    {
+      "id": "sum-until-zero",
+      "title": "Sum until zero",
+      "prompt": "Read integers until the user enters 0; then print the total sum.",
+      "starter": "total = 0\n# your code here\n",
+      "solution": "total = 0\nnum = None\nwhile num != 0:\n    num = int(input(\"Number (0 to stop): \"))\n    total += num\nprint(total)\n"
+    },
+    {
+      "id": "first-even",
+      "title": "Find first even",
+      "prompt": "Given nums, walk through with a while loop and print the first even number, then stop.",
+      "starter": "nums = [3, 9, 11, 4, 8]\n# your code here\n",
+      "solution": "nums = [3, 9, 11, 4, 8]\ni = 0\nwhile i < len(nums):\n    if nums[i] % 2 == 0:\n        print(nums[i])\n        break\n    i += 1\n"
+    }
+  ]
 }

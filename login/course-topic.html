@@ -223,6 +223,13 @@
     let currentChallenges = [];
     let activeChallenge = null;
 
+    function getActiveSolution() {
+      if (activeChallenge && activeChallenge.solution) {
+        return activeChallenge.solution;
+      }
+      return solutionCache[currentLesson] || "";
+    }
+
     function pickDefaultLesson() {
       return currentLesson || (lessons[0] ? lessons[0].id : "print");
     }
@@ -342,6 +349,7 @@
           title: item.title || item.prompt || "Challenge",
           prompt: item.prompt || item.title || "",
           starter: item.starter || "",
+          solution: item.solution || "",
         };
       };
       currentChallenges = Array.isArray(list) ? list.filter(Boolean).map(normalize) : [];
@@ -372,6 +380,7 @@
       document.querySelectorAll(".pill-btn").forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.lesson === lesson.id);
       });
+      activeChallenge = null;
       document.getElementById("topicTitle").textContent = lesson.title;
       document.getElementById("topicSyllabus").textContent = lesson.syllabusDesc || lesson.desc || "";
       document.getElementById("topicDesc").textContent = lesson.desc || "";
@@ -391,7 +400,7 @@
       const outputEl = document.getElementById("output");
       const editor = document.getElementById("code-editor");
       outputEl.textContent = "Running...";
-      const code = useSolution ? (solutionCache[currentLesson] || "") : editor.value;
+      const code = useSolution ? getActiveSolution() : editor.value;
       try {
         const res = await fetch("/api/run-python", {
           method: "POST",
@@ -466,13 +475,13 @@
       document.getElementById("runUser").addEventListener("click", () => runLesson(false));
       document.getElementById("runSample").addEventListener("click", () => runLesson(true));
       document.getElementById("loadSample").addEventListener("click", () => {
-        document.getElementById("code-editor").value = solutionCache[currentLesson] || "";
+        document.getElementById("code-editor").value = getActiveSolution() || "";
       });
       document.getElementById("toggleSolution").addEventListener("click", () => {
         const view = document.getElementById("solutionView");
         const isHidden = view.style.display === "none";
         if (isHidden) {
-          view.textContent = solutionCache[currentLesson] || "";
+          view.textContent = getActiveSolution() || "";
           view.style.display = "block";
           document.getElementById("toggleSolution").textContent = "Hide our code";
         } else {

@@ -73,6 +73,292 @@
       </div>
     </main>
 
+    <section class="section-block muted-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Curriculum model</span>
+            <h2 class="section-title">Course -> Topics -> Subtopics with challenges.</h2>
+          </div>
+          <p class="section-sub">Everything is nested so learners always know where they are: course-level, topic like Pandas/NumPy, then subtopics such as Python basics, print, if, and for loops.</p>
+        </div>
+        <div class="structure-grid">
+          <article class="structure-card">
+            <p class="structure-label">Course</p>
+            <h3>Python</h3>
+            <p class="structure-desc">Foundations course that anchors the entire pathway.</p>
+            <a class="mini-btn primary" href="/login/syllabus.html?course=python">View syllabus</a>
+          </article>
+          <div class="structure-arrow">-&gt;</div>
+          <article class="structure-card">
+            <p class="structure-label">Topics</p>
+            <h3>Pandas, NumPy, Core Python</h3>
+            <p class="structure-desc">Hands-on units: dataframes and series, arrays and vectorization, and core control flow.</p>
+            <ul class="structure-list">
+              <li>Pandas: load, select, filter, group</li>
+              <li>NumPy: arrays, slicing, broadcasting</li>
+              <li>Core: input/output, branching, loops</li>
+            </ul>
+          </article>
+          <div class="structure-arrow">-&gt;</div>
+          <article class="structure-card">
+            <p class="structure-label">Subtopics</p>
+            <h3>Python basics, print, if, for loop</h3>
+            <p class="structure-desc">Every subtopic ends with a challenge so learners practice before moving on.</p>
+            <ul class="structure-list">
+              <li>Python basics: syntax, variables, functions</li>
+              <li>Print: f-strings, multiple args, formatting</li>
+              <li>If/elif/else: branching and guards</li>
+              <li>For loop: iterate, enumerate, range</li>
+            </ul>
+          </article>
+        </div>
+        <div class="structure-json">
+          <p class="structure-label" style="margin-bottom:4px;">JSON layout</p>
+          <pre><code>{
+  "courses": [
+    {
+      "id": "python",
+      "topicsManifest": "/data/topics/python/index.json"
+    }
+  ]
+}</code></pre>
+          <pre><code>{
+  "topicFiles": [
+    "pandas.json",
+    "numpy.json",
+    "print.json",
+    "if.json",
+    "for.json"
+  ]
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container reading-column">
+        <span class="eyebrow">Why learn now</span>
+        <h2 class="section-title">Python is the new literacy for people who ship ideas.</h2>
+        <p>
+          Python sits at the intersection of readability, massive library support, and a community that turns research papers into real software overnight. Even as AI models get better at generating snippets, the people who understand the language, the standard library, and how to stitch tools together are the ones who turn auto-generated code into working, secure systems. Knowing Python also means you can read other people's notebooks, debug production scripts, and move quickly from prototype to production.
+        </p>
+        <p>
+          Learning Python is a force multiplier: you can automate repetitive work, build dashboards, orchestrate data pipelines, and experiment with AI APIs without waiting on someone else. It is also the fastest way to translate curiosity into action - whether you are exploring a dataset, validating a hypothesis, or building a small web service for a side project.
+        </p>
+        <div class="highlight-box">
+          <h3>Even with AI copilots, you need fluency</h3>
+          <p>
+            AI tools accelerate typing, but they do not replace judgment. You still need to know how to break down problems, spot when suggestions are wrong, secure your code, and make trade-offs. Fluency in Python keeps you in control of quality, performance, and ethics rather than outsourcing them to an opaque model.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block muted-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Core thinking</span>
+            <h2 class="section-title">Data structures & algorithms keep your solutions robust.</h2>
+          </div>
+          <p class="section-sub">
+            Frameworks change, fundamentals do not. Knowing when to reach for a heap over a list or when to use a trie instead of brute force keeps your systems reliable and cost-effective.
+          </p>
+        </div>
+        <div class="pillars-grid">
+          <article class="pillar-card">
+            <h3>Problem framing</h3>
+            <p>
+              Translate product or research requirements into computational steps. Choose the right data structure for lookup, streaming, caching, or graph traversal before you write a line of code.
+            </p>
+            <ul>
+              <li>Arrays, lists, and slicing for fast iteration</li>
+              <li>Dictionaries, sets, and hashing for constant-time access</li>
+              <li>Stacks/queues for stateful workflows and backtracking</li>
+            </ul>
+          </article>
+          <article class="pillar-card">
+            <h3>Performance & scale</h3>
+            <p>
+              Every AI feature eventually meets real-world constraints like latency, memory, and budgets. Algorithms let you control big-O costs instead of guessing.
+            </p>
+            <ul>
+              <li>Sorting, searching, and binary partitioning patterns</li>
+              <li>Two-pointer and sliding window techniques for streaming data</li>
+              <li>Graph algorithms that power recommendations and routing</li>
+            </ul>
+          </article>
+          <article class="pillar-card">
+            <h3>Production resilience</h3>
+            <p>
+              Clean data structures simplify testing, logging, and failure recovery. They also make AI-generated code safer because you know when to reject a suggestion that breaks invariants.
+            </p>
+            <ul>
+              <li>Immutability, idempotency, and defensive copies</li>
+              <li>Space-time trade-offs for real-world constraints</li>
+              <li>Readable abstractions that keep teams aligned</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container reading-column">
+        <span class="eyebrow">Machine learning essentials</span>
+        <h2 class="section-title">ML is where Python, data structures, and math converge.</h2>
+        <p>
+          Machine learning is more than fitting models. You need to collect and clean data, engineer features, split datasets correctly, validate, monitor drift, and deploy responsibly. Each step relies on Python's ecosystem (NumPy, Pandas, PyTorch, scikit-learn) and on the core CS thinking you sharpen through data structures.
+        </p>
+        <p>
+          Understanding ML pipelines lets you evaluate AI outputs critically. You can spot data leakage, diagnose overfitting, and design experiments that answer business questions. With that fluency, AI tooling becomes an accelerator instead of a crutch.
+        </p>
+        <div class="chapter-grid">
+          <div class="chapter-card">
+            <h4>Foundations</h4>
+            <p>Linear algebra intuition, gradients, vectorization, and why numerical stability matters for real datasets.</p>
+          </div>
+          <div class="chapter-card">
+            <h4>Modeling</h4>
+            <p>From classic ML (trees, boosting, clustering) to deep learning basics (embeddings, transformers, attention).</p>
+          </div>
+          <div class="chapter-card">
+            <h4>Evaluation</h4>
+            <p>Metrics that match the problem (precision/recall, ROC-AUC, calibration) and how to run fair, repeatable experiments.</p>
+          </div>
+          <div class="chapter-card">
+            <h4>Deployment</h4>
+            <p>APIs, batch jobs, feature stores, monitoring for drift and bias, and post-deploy guardrails to keep systems safe.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block muted-block">
+      <div class="container reading-column">
+        <span class="eyebrow">Beyond the hype</span>
+        <h2 class="section-title">Upcoming technologies you should track.</h2>
+        <p>
+          AI is advancing quickly, but it rides on top of well-understood engineering disciplines. By mastering Python, data structures, and ML, you create a foundation to learn new technologies without being overwhelmed by marketing claims.
+        </p>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <h4>Generative AI & LLMOps</h4>
+            <p>Prompt engineering is just the surface. Model evaluation, safety filters, retrieval augmentation, and cost-aware inference require strong Python and systems skills.</p>
+          </div>
+          <div class="tech-card">
+            <h4>Edge & on-device ML</h4>
+            <p>Smaller, optimized models (quantization, distillation) demand data-structure awareness to fit memory and latency budgets on mobile and embedded hardware.</p>
+          </div>
+          <div class="tech-card">
+            <h4>Data platforms & streaming</h4>
+            <p>Kafka, Flink, Arrow, and DuckDB unlock real-time analytics. Understanding how data moves and is indexed lets you design reliable pipelines.</p>
+          </div>
+          <div class="tech-card">
+            <h4>Responsible AI</h4>
+            <p>Bias detection, privacy-preserving learning, and auditability are grounded in solid experimentation practices and traceable code.</p>
+          </div>
+        </div>
+        <p>
+          The throughline: tools will evolve, but people who can read code, reason about complexity, and debug ML systems will stay in demand. Your learning investment compounds even as AI changes how we work.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Courses live now</span>
+            <h2 class="section-title">Build fundamentals through focused tracks.</h2>
+          </div>
+          <p class="section-sub">Each course pairs concise lessons with real-world challenges so you practice before moving on.</p>
+        </div>
+        <div class="pillars-grid">
+          <article class="pillar-card">
+            <h3>Python Basics + Challenges</h3>
+            <p>Learn syntax, functions, files, and error handling with daily exercises that force you to read docs and ship small scripts.</p>
+            <ul>
+              <li>Hands-on challenges after every topic</li>
+              <li>Standard library fluency: pathlib, collections, itertools</li>
+              <li>Automation mini-projects to cement habits</li>
+            </ul>
+          </article>
+          <article class="pillar-card">
+            <h3>Data Structures in Practice</h3>
+            <p>Master lists, dicts, sets, stacks, queues, heaps, and graphs by applying them to realistic datasets and performance constraints.</p>
+            <ul>
+              <li>Complexity analysis with practical benchmarks</li>
+              <li>Patterns: sliding window, two-pointers, graph traversals</li>
+              <li>Refactoring challenges to improve code clarity</li>
+            </ul>
+          </article>
+          <article class="pillar-card">
+            <h3>Machine Learning Foundations</h3>
+            <p>Cover the ML lifecycle: data prep, feature engineering, training, evaluation, and lightweight deployment with Python-first tools.</p>
+            <ul>
+              <li>Workflows in NumPy, Pandas, scikit-learn</li>
+              <li>Model intuition: trees, boosting, linear/regularized models</li>
+              <li>Capstone: deploy a small API and monitor its metrics</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Your roadmap</span>
+            <h2 class="section-title">A practical, multi-month plan to stay ahead.</h2>
+          </div>
+          <p class="section-sub">Consistency beats intensity. Here is a clear path you can follow and adjust as you progress.</p>
+        </div>
+        <div class="roadmap">
+          <div class="roadmap-step">
+            <div class="step-head">
+              <span class="step-number">01</span>
+              <h3>Build Python fluency</h3>
+            </div>
+            <p>Write small scripts daily. Automate a weekly task. Learn the standard library (pathlib, collections, itertools) and test with pytest so you trust your changes.</p>
+          </div>
+          <div class="roadmap-step">
+            <div class="step-head">
+              <span class="step-number">02</span>
+              <h3>Master data structures</h3>
+            </div>
+            <p>Practice with real datasets. Re-implement queues, stacks, heaps, and graphs. Benchmark approaches and document trade-offs so you can defend your choices in interviews and code reviews.</p>
+          </div>
+          <div class="roadmap-step">
+            <div class="step-head">
+              <span class="step-number">03</span>
+              <h3>Ship ML end-to-end</h3>
+            </div>
+            <p>Pick a problem (recommendations, classification, forecasting). Clean data, train baselines, iterate, deploy a minimal API, and monitor metrics. Treat each project as a portfolio piece.</p>
+          </div>
+          <div class="roadmap-step">
+            <div class="step-head">
+              <span class="step-number">04</span>
+              <h3>Explore upcoming tech</h3>
+            </div>
+            <p>Experiment with an LLM-powered feature, optimize a model for edge, or build a streaming dashboard. Reflect on what worked, what broke, and how your fundamentals guided fixes.</p>
+          </div>
+        </div>
+        <div class="cta-panel">
+          <div>
+            <h3>Stay curious, keep shipping.</h3>
+            <p>AI can draft code, but you decide what ships. The stronger your fundamentals, the more leverage you have over any tool that enters the stack.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-solid btn-lg" href="#">Browse the curriculum</a>
+            <a class="btn btn-outline btn-lg" href="#">Join the next cohort</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <script src="script.js"></script>
   </body>
 </html>

@@ -6,5 +6,35 @@
   "desc": "Key/value storage; great for lookups. Use .get to avoid KeyErrors.",
   "placeholder": "person = {'name':'Ada','role':'dev'}\nprint(person['name'])",
   "solution": "person = {\"name\": \"Ada\", \"role\": \"dev\"}\nprint(person[\"name\"])",
-  "difficulty": "med"
+  "difficulty": "med",
+  "challenges": [
+    {
+      "id": "word-count",
+      "title": "Word count",
+      "prompt": "Count how many times each word appears in ['red','blue','red','green','blue','blue'] and print the dict.",
+      "starter": "words = ['red','blue','red','green','blue','blue']\ncounts = {}\n# your code here\n",
+      "solution": "words = ['red','blue','red','green','blue','blue']\ncounts = {}\nfor w in words:\n    counts[w] = counts.get(w, 0) + 1\nprint(counts)\n"
+    },
+    {
+      "id": "invert-dict",
+      "title": "Invert a dictionary",
+      "prompt": "Given {'a':1,'b':2,'c':3}, produce {1:'a',2:'b',3:'c'}.",
+      "starter": "original = {'a':1,'b':2,'c':3}\ninverted = {}\n# your code here\n",
+      "solution": "original = {'a':1,'b':2,'c':3}\ninverted = {}\nfor k, v in original.items():\n    inverted[v] = k\nprint(inverted)\n"
+    },
+    {
+      "id": "merge-with-sum",
+      "title": "Merge and sum",
+      "prompt": "Merge a = {'apples': 3, 'oranges': 2} and b = {'apples': 2, 'bananas': 5} summing shared keys. Print the result.",
+      "starter": "a = {'apples': 3, 'oranges': 2}\nb = {'apples': 2, 'bananas': 5}\nmerged = {}\n# your code here\n",
+      "solution": "a = {'apples': 3, 'oranges': 2}\nb = {'apples': 2, 'bananas': 5}\nmerged = {}\nfor k, v in a.items():\n    merged[k] = merged.get(k, 0) + v\nfor k, v in b.items():\n    merged[k] = merged.get(k, 0) + v\nprint(merged)\n"
+    },
+    {
+      "id": "lookup-safe",
+      "title": "Safe lookup",
+      "prompt": "Given users = {'alice': 'admin', 'bob': 'viewer'}, read a username and print their role or 'guest' if missing using .get.",
+      "starter": "users = {'alice': 'admin', 'bob': 'viewer'}\nname = input(\"User: \")\n# your code here\n",
+      "solution": "users = {'alice': 'admin', 'bob': 'viewer'}\nname = input(\"User: \")\nprint(users.get(name, 'guest'))\n"
+    }
+  ]
 }

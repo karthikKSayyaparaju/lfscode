@@ -10,6 +10,7 @@
     { "href": "#for-loop", "label": "For Loop" }
   ],
   "topicFiles": [
+    "pandas.json",
     "print.json",
     "if.json",
     "for.json",

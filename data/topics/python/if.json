@@ -6,5 +6,35 @@
   "desc": "Branch with if / elif / else to handle thresholds or choices.",
   "placeholder": "score = 50\nif score > 40:\n    print('pass')",
   "solution": "score = 82\n\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelse:\n    print(\"Keep practicing!\")",
-  "difficulty": "med"
+  "difficulty": "med",
+  "challenges": [
+    {
+      "id": "grade",
+      "title": "Grade classifier",
+      "prompt": "Given a score, print A for 90+, B for 80+, C for 70+, else \"Retake\". Use if/elif/else.",
+      "starter": "score = 88\n# your code here\n",
+      "solution": "score = 88\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelif score >= 70:\n    print(\"C\")\nelse:\n    print(\"Retake\")\n"
+    },
+    {
+      "id": "even-odd",
+      "title": "Even or odd",
+      "prompt": "Read a number from input() and print \"even\" if divisible by 2, else \"odd\".",
+      "starter": "n = int(input(\"Number: \"))\n# your code here\n",
+      "solution": "n = int(input(\"Number: \"))\nif n % 2 == 0:\n    print(\"even\")\nelse:\n    print(\"odd\")\n"
+    },
+    {
+      "id": "ticket-price",
+      "title": "Ticket pricing",
+      "prompt": "Set price based on age: under 5 -> 0, under 18 -> 8, else 12. Print the price.",
+      "starter": "age = 16\n# your code here\n",
+      "solution": "age = 16\nif age < 5:\n    price = 0\nelif age < 18:\n    price = 8\nelse:\n    price = 12\nprint(price)\n"
+    },
+    {
+      "id": "max-of-two",
+      "title": "Max of two numbers",
+      "prompt": "Given a and b, print the larger number without using max().",
+      "starter": "a = 12\nb = 7\n# your code here\n",
+      "solution": "a = 12\nb = 7\nif a >= b:\n    print(a)\nelse:\n    print(b)\n"
+    }
+  ]
 }

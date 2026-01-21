@@ -11,5 +11,35 @@
   "desc": "Use print() to show strings, numbers, and variables. Great for quick checks.",
   "placeholder": "print(\"Hello, world!\")",
   "solution": "print(\"Hello, world!\")\nname = \"Ada\"\nprint(\"Hi\", name)\nprint(f\"2 + 2 = {2 + 2}\")",
-  "difficulty": "easy"
+  "difficulty": "easy",
+  "challenges": [
+    {
+      "id": "hello-name",
+      "title": "Greet a user",
+      "prompt": "Ask for a name with input() and print \"Hello, <name>!\" using an f-string.",
+      "starter": "name = input(\"Name: \")\n# your code here\n",
+      "solution": "name = input(\"Name: \")\nprint(f\"Hello, {name}!\")\n"
+    },
+    {
+      "id": "math-string",
+      "title": "Show a math fact",
+      "prompt": "Print a sentence that shows 7 + 5 = 12 using f-strings to do the math inline.",
+      "starter": "# your code here\n",
+      "solution": "total = 7 + 5\nprint(f\"7 + 5 = {total}\")\n"
+    },
+    {
+      "id": "multi-line",
+      "title": "Multi-line output",
+      "prompt": "Use \\n to print a shopping list on separate lines: milk, eggs, bread.",
+      "starter": "# your code here\n",
+      "solution": "print(\"Shopping list:\\nmilk\\neggs\\nbread\")\n"
+    },
+    {
+      "id": "comma-vs-fstring",
+      "title": "Compare print styles",
+      "prompt": "Print the same message twice: once using print(\"Score:\", score) and once using f\"Score: {score}\". Set score = 42.",
+      "starter": "score = 42\n# your code here\n",
+      "solution": "score = 42\nprint(\"Score:\", score)\nprint(f\"Score: {score}\")\n"
+    }
+  ]
 }

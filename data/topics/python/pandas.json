@@ -1,0 +1,47 @@
+{
+  "id": "pandas",
+  "title": "Pandas basics",
+  "syllabusDesc": "Load, inspect, and slice dataframes for quick analysis.",
+  "inlineSample": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\nprint(df.head())",
+  "desc": "Use Pandas to read CSV/JSON data, inspect columns, filter rows, and select slices. Mastering the basics lets you explore data fast and build features for ML.",
+  "placeholder": "import pandas as pd\n# load and inspect data here\n",
+  "solution": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\nprint(df.head())\nprint(df.describe())\n",
+  "difficulty": "med",
+  "techniques": [
+    "read_csv to load tabular data",
+    "head, info, describe to inspect",
+    "Selecting columns with labels",
+    "Filtering rows with boolean masks"
+  ],
+  "challenges": [
+    {
+      "id": "load-inspect",
+      "title": "Load and inspect",
+      "prompt": "Load data.csv into a dataframe and print the first 3 rows.",
+      "starter": "import pandas as pd\n# your code here\n",
+      "solution": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\nprint(df.head(3))\n"
+    },
+    {
+      "id": "filter-rows",
+      "title": "Filter rows",
+      "prompt": "Print rows where the price column is greater than 100.",
+      "starter": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\n# your code here\n",
+      "solution": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\nprint(df[df[\"price\"] > 100])\n"
+    },
+    {
+      "id": "select-columns",
+      "title": "Select columns",
+      "prompt": "Print only the name and price columns from the dataframe.",
+      "starter": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\n# your code here\n",
+      "solution": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\nprint(df[[\"name\", \"price\"]])\n"
+    },
+    {
+      "id": "group-average",
+      "title": "Group and average",
+      "prompt": "Group by category and print the average price per category.",
+      "starter": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\n# your code here\n",
+      "solution": "import pandas as pd\ndf = pd.read_csv(\"data.csv\")\nprint(df.groupby(\"category\")[\"price\"].mean())\n"
+    }
+  ],
+  "notes": "Use df.copy() before mutating slices; set index if a column uniquely identifies rows. Start with small samples (head/tail) before heavy operations."
+}

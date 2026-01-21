@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syllabus • LearnFromScratch</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <script>
+    window.__HEADER_CONFIG__ = {
+      navLinks: [
+        { href: "/login/dashboard.html", label: "Dashboard" },
+        { href: "/login/courses.html", label: "Courses" },
+        { href: "/login/syllabus.html", label: "Syllabus" }
+      ],
+      actionButtons: [
+        { href: "/login/dashboard.html", label: "Back to dashboard", className: "btn btn-outline" }
+      ],
+      hideAuthLink: true,
+    };
+  </script>
+  <div id="headerMount"></div>
+
+  <main class="container syllabus-shell">
+    <header class="syllabus-hero">
+      <div>
+        <span class="eyebrow">Syllabus</span>
+        <h1 id="courseTitle" class="section-title" style="margin-top:6px;">Course outline</h1>
+        <p id="courseSummary" class="section-sub">Loading course details...</p>
+      </div>
+      <div class="syllabus-meta">
+        <div id="courseTags" class="pill-row"></div>
+        <div class="cta-actions">
+          <a class="btn btn-solid btn-lg" id="openCourse" href="/login/courses.html">Open course overview</a>
+          <a class="btn btn-outline btn-lg" id="startTopic" href="#">Start with first topic</a>
+        </div>
+      </div>
+      <div class="syllabus-note">
+        <h3>How to use this course</h3>
+        <ul>
+          <li>Scan the outline to see the flow from fundamentals to practice.</li>
+          <li>Open each topic to read, run code, and complete the challenge at the bottom.</li>
+          <li>Use the subtopics below as a checklist; add notes after you solve each challenge.</li>
+          <li>Repeat challenges a day later to lock in concepts before moving on.</li>
+        </ul>
+      </div>
+    </header>
+
+    <section aria-label="Course topics" class="syllabus-topics">
+      <div class="section-header" style="margin-bottom:12px;">
+        <div>
+          <span class="eyebrow">Outline</span>
+          <h2 class="section-title" style="margin-top:4px;">Topics and subtopics</h2>
+        </div>
+        <p class="section-sub">Each topic ends with a challenge; solving it makes you fluent before the next module.</p>
+      </div>
+      <div id="topicsGrid" class="syllabus-grid">Loading topics...</div>
+    </section>
+  </main>
+
+  <script src="/script.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const selectedCourse = params.get("course") || "python";
+
+    function buildSubtopicList(lesson) {
+      if (Array.isArray(lesson.details) && lesson.details.length) return lesson.details;
+      if (Array.isArray(lesson.subtopics) && lesson.subtopics.length) return lesson.subtopics;
+      if (lesson.syllabusDesc) return [lesson.syllabusDesc];
+      if (lesson.desc) return [lesson.desc];
+      return [];
+    }
+
+    async function loadSyllabus() {
+      const topicsGrid = document.getElementById("topicsGrid");
+      try {
+        const courseRes = await fetch("/data/courses.json", { cache: "no-cache" });
+        if (!courseRes.ok) throw new Error("Courses failed to load");
+        const { courses = [] } = await courseRes.json();
+        const course = courses.find((c) => c.id === selectedCourse) || courses[0];
+        if (!course) throw new Error("Course not found");
+
+        document.getElementById("courseTitle").textContent = course.title;
+        document.getElementById("courseSummary").textContent = course.summary || "";
+
+        const tags = document.getElementById("courseTags");
+        tags.innerHTML = "";
+        (course.tags || []).forEach((tag) => {
+          const span = document.createElement("span");
+          span.className = "pill-tag";
+          span.textContent = tag;
+          tags.appendChild(span);
+        });
+
+        const openCourse = document.getElementById("openCourse");
+        const startTopic = document.getElementById("startTopic");
+        if (openCourse) openCourse.href = course.cta || "/login/courses.html";
+
+        const manifestUrl = course.topicsManifest || `/data/topics/${course.id}/index.json`;
+        const manifestRes = await fetch(manifestUrl, { cache: "no-cache" });
+        if (!manifestRes.ok) throw new Error("Manifest failed to load");
+        const manifest = await manifestRes.json();
+        const topicFiles = manifest.topicFiles || [];
+        const basePath = manifest.basePath || `/data/topics/${course.id}/`;
+
+        const lessons = (
+          await Promise.all(
+            topicFiles.map(async (file) => {
+              const res = await fetch(`${basePath}${file}`, { cache: "no-cache" });
+              if (!res.ok) return null;
+              return res.json();
+            })
+          )
+        ).filter(Boolean);
+
+        if (!lessons.length) {
+          topicsGrid.textContent = "No topics available yet.";
+          return;
+        }
+
+        if (startTopic && lessons[0]) {
+          startTopic.href = `/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(lessons[0].id)}`;
+        }
+
+        const fragment = document.createDocumentFragment();
+        lessons.forEach((lesson, idx) => {
+          const subtopics = buildSubtopicList(lesson);
+          const card = document.createElement("article");
+          card.className = "syllabus-card";
+          card.innerHTML = `
+            <div class="syllabus-card-head">
+              <div>
+                <p class="syllabus-step">Topic ${String(idx + 1).padStart(2, "0")}</p>
+                <h3 class="syllabus-card-title">${lesson.title}</h3>
+                <p class="syllabus-card-desc">${lesson.syllabusDesc || lesson.desc || ""}</p>
+              </div>
+              <span class="difficulty-pill">${lesson.difficulty || "self-paced"}</span>
+            </div>
+            <ul class="syllabus-subtopics">
+              ${subtopics.map((item) => `<li>${item}</li>`).join("")}
+            </ul>
+            <div class="syllabus-actions">
+              <a class="mini-btn primary" href="/login/course-topic.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(lesson.id)}">Open topic and solve challenge</a>
+            </div>
+          `;
+          fragment.appendChild(card);
+        });
+        topicsGrid.innerHTML = "";
+        topicsGrid.appendChild(fragment);
+      } catch (err) {
+        topicsGrid.textContent = "Unable to load syllabus right now.";
+        console.warn(err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadSyllabus);
+  </script>
+</body>
+</html>

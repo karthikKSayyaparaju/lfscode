@@ -8,6 +8,7 @@
       "tags": ["Beginner", "Hands-on", "Python 3"],
       "cta": "/login/courses.html?course=python",
       "topicPage": "/login/course-topic.html",
+      "syllabusPage": "/login/syllabus.html?course=python",
       "topicsManifest": "/data/topics/python/index.json",
       "primaryColor": "#16a34a"
     },
@@ -19,6 +20,7 @@
       "tags": ["Beginner", "Hands-on", "Python 3"],
       "cta": "/login/courses.html?course=ML-basics",
       "topicPage": "/login/course-topic.html",
+      "syllabusPage": "/login/syllabus.html?course=ML-basics",
       "topicsManifest": "/data/topics/ML/index.json",
       "primaryColor": "#16a34a"
     },
@@ -30,6 +32,7 @@
       "tags": ["Beginner", "Data structures", "Python 3"],
       "cta": "/login/courses.html?course=DataStructures",
       "topicPage": "/login/course-topic.html",
+      "syllabusPage": "/login/syllabus.html?course=DataStructures",
       "topicsManifest": "/data/topics/DataStructures/index.json",
       "primaryColor": "#0ea5e9"
     }

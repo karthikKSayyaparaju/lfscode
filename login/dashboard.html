@@ -59,7 +59,7 @@
             <p class="course-desc">Syntax, loops, functions, I/O, and fundamentals with quick checks.</p>
             <div class="course-actions">
               <a class="mini-btn primary" href="/login/courses.html">Open</a>
-              <a class="mini-btn" href="/login/courses.html">Syllabus</a>
+              <a class="mini-btn" href="/login/syllabus.html?course=python">Syllabus</a>
             </div>
           </div>
 
@@ -71,7 +71,7 @@
             <p class="course-desc">Arrays, stacks, queues, linked lists, trees, graphs + problem sets.</p>
             <div class="course-actions">
               <a class="mini-btn primary" href="#">Open</a>
-              <a class="mini-btn" href="#">Syllabus</a>
+              <a class="mini-btn" href="/login/syllabus.html?course=DataStructures">Syllabus</a>
             </div>
           </div>
 
@@ -105,21 +105,21 @@
         if (!res.ok) throw new Error("courses load failed");
         const { courses = [] } = await res.json();
         courses.forEach((course) => {
-          const card = document.createElement("div");
-          card.className = "course-card";
-          card.innerHTML = `
-            <div class="course-top">
-              <h3 class="course-title">${course.title}</h3>
-              <span class="pill">${course.pill || "Start"}</span>
-            </div>
-            <p class="course-desc">${course.summary || ""}</p>
-            <div class="course-actions">
-              <a class="mini-btn primary" href="${course.cta}">Open</a>
-              <a class="mini-btn" href="${course.topicPage || course.cta}">Syllabus</a>
-            </div>
-          `;
-          row.appendChild(card);
-        });
+            const card = document.createElement("div");
+            card.className = "course-card";
+            card.innerHTML = `
+              <div class="course-top">
+                <h3 class="course-title">${course.title}</h3>
+                <span class="pill">${course.pill || "Start"}</span>
+              </div>
+              <p class="course-desc">${course.summary || ""}</p>
+              <div class="course-actions">
+                <a class="mini-btn primary" href="${course.cta}">Open</a>
+                <a class="mini-btn" href="${course.syllabusPage || course.topicPage || course.cta}">Syllabus</a>
+              </div>
+            `;
+            row.appendChild(card);
+          });
       } catch (err) {
         row.innerHTML = "<p style='margin:0;'>Unable to load courses.</p>";
       }

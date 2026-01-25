@@ -7,11 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  <style>
-    .rail-link { text-decoration: underline; text-underline-offset: 4px; }
-    .rail-link:hover { color: var(--accent); }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <script>
@@ -35,18 +31,24 @@
     </div>
 
     <div class="courses-shell">
-      <aside class="rail">
-        <h3><a id="courseOverviewLink" class="rail-link" href="#">Course overview</a></h3>
-        <p id="courseSummary">Loading...</p>
-        <div class="pill-row" id="pillRow"></div>
-        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+      <section class="overview-strip">
+        <div class="overview-main">
+          <p class="overview-eyebrow">
+            <a id="courseOverviewLink" class="rail-link" href="#">Course overview</a>
+          </p>
+          <p id="courseSummary">Loading...</p>
+          <div class="pill-row" id="pillRow"></div>
+        </div>
+        <div class="overview-actions">
           <a class="btn btn-outline" id="startTopic" href="#">Start first topic</a>
           <a class="btn btn-solid" id="practiceLink" href="#">Practice challenges</a>
         </div>
-      </aside>
+      </section>
 
       <section class="topics" id="topicsList">
-        <h2>Topics</h2>
+        <div class="topics-head">
+          <h2>Topics</h2>
+        </div>
       </section>
 
       <aside class="right-rail">

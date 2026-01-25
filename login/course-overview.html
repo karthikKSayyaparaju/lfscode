@@ -7,68 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  <style>
-    body { background-color: #f8fafc; background-image: var(--bg-pattern); }
-    .overview-shell {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 320px;
-      gap: 18px;
-      padding: 18px 0 60px;
-    }
-    .main-stack { display: flex; flex-direction: column; gap: 16px; }
-    .card {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
-    }
-    .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 12px;
-      opacity: 0.65;
-      margin: 0 0 6px;
-      font-weight: 600;
-    }
-    .lede { margin: 8px 0 12px; opacity: 0.84; font-weight: 300; }
-    .meta-row {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin: 12px 0;
-    }
-    .meta-block {
-      padding: 10px 12px;
-      border: 1px dashed #e2e8f0;
-      border-radius: 12px;
-      min-width: 140px;
-    }
-    .meta-value { margin: 0; font-weight: 700; font-size: 22px; }
-    .meta-label { margin: 0; opacity: 0.7; font-weight: 300; font-size: 13px; }
-    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
-    .pill-row { margin-top: 6px; }
-    .topic-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-    .overview-topic {
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 12px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      background: #fff;
-    }
-    .overview-topic h4 { margin: 0; font-weight: 500; }
-    .overview-topic p { margin: 4px 0 0; opacity: 0.82; font-weight: 300; }
-    .text-link { text-decoration: underline; text-underline-offset: 3px; }
-    .text-link:hover { color: var(--accent); }
-    .side-card { position: sticky; top: 90px; align-self: start; }
-    @media (max-width: 1100px) {
-      .overview-shell { grid-template-columns: 1fr; }
-      .side-card { position: static; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <script>

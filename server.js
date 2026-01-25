@@ -72,7 +72,7 @@ function ensureAuth(req, res, next) {
 
 // Protect /login paths except the public login assets
 app.use("/login", (req, res, next) => {
-  const openPaths = new Set(["/login.html", "/login.js", "/", ""]);
+  const openPaths = new Set(["/login.html", "/login.js", "/styles.css", "/", ""]);
   if (openPaths.has(req.path)) return next();
   res.set("Cache-Control", "no-store");
   return ensureAuth(req, res, next);

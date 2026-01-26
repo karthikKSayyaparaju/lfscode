@@ -204,6 +204,48 @@
       font-size: 14px;
       color: #475569;
     }
+
+    /* --- Redesign Layout Overrides --- */
+    /* 1. Fluid Container with Left Axis */
+    .container {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding-left: 60px !important;
+      padding-right: 60px !important;
+    }
+
+    /* 2. Header & Logo */
+    .nav {
+      justify-content: flex-start !important;
+    }
+
+    .brand-name {
+      font-weight: 800 !important;
+      font-size: 1.5rem !important;
+      letter-spacing: -0.04em;
+    }
+
+    .nav-links {
+      margin-left: auto;
+      /* Push links to the right */
+      margin-right: 32px;
+    }
+
+    /* 3. Dashboard Alignment */
+    .hero {
+      display: block !important;
+      /* Remove flex centering */
+      min-height: auto !important;
+      padding-top: 40px;
+    }
+
+    .hero-inner {
+      text-align: left !important;
+      padding-top: 10px !important;
+      padding-bottom: 40px !important;
+      display: block !important;
+    }
   </style>
 </head>
 

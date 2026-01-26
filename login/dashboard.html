@@ -206,8 +206,8 @@
     }
 
     /* --- Redesign Layout Overrides --- */
-    /* 1. Fluid Container with Left Axis */
-    .container {
+    /* 1. Fluid Header Only (Logo in corner) */
+    #headerMount .container {
       width: 100% !important;
       max-width: 100% !important;
       margin: 0 !important;
@@ -231,21 +231,6 @@
       margin-left: auto;
       /* Push links to the right */
       margin-right: 32px;
-    }
-
-    /* 3. Dashboard Alignment */
-    .hero {
-      display: block !important;
-      /* Remove flex centering */
-      min-height: auto !important;
-      padding-top: 40px;
-    }
-
-    .hero-inner {
-      text-align: left !important;
-      padding-top: 10px !important;
-      padding-bottom: 40px !important;
-      display: block !important;
     }
   </style>
 </head>

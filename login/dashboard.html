@@ -72,6 +72,7 @@
       position: relative;
       overflow: visible;
       /* Allow icon to float */
+      text-align: center;
     }
 
     .course-card:hover {
@@ -81,26 +82,19 @@
       /* Deepen shadow */
     }
 
-    /* Floating Icon */
-    .course-icon-box {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #ffffff, #f3f4f6);
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-      margin-bottom: 16px;
-    }
-
     .course-title {
       font-size: 1.25rem;
       font-weight: 700;
       color: #111827;
       margin: 0 0 8px 0;
+    }
+
+    .course-header-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .course-desc {
@@ -275,9 +269,8 @@
         <div class="course-row" id="courseRow">
           <!-- Filled by JS (but has fallback static cards too) -->
           <div class="course-card">
-            <div class="course-icon-box">🐍</div>
             <div>
-              <div style="display:flex; justify-content:space-between; align-items:start;">
+              <div class="course-header-row">
                 <h3 class="course-title">Basic Python</h3>
                 <span class="pill">Beginner</span>
               </div>
@@ -296,9 +289,8 @@
           </div>
 
           <div class="course-card">
-            <div class="course-icon-box">🏗️</div>
             <div>
-              <div style="display:flex; justify-content:space-between; align-items:start;">
+              <div class="course-header-row">
                 <h3 class="course-title">Data Structures</h3>
                 <span class="pill">Intermediate</span>
               </div>
@@ -317,17 +309,16 @@
           </div>
 
           <div class="course-card">
-            <div class="course-icon-box">🤖</div>
             <div>
-              <div style="display:flex; justify-content:space-between; align-items:start;">
+              <div class="course-header-row">
                 <h3 class="course-title">Machine Learning</h3>
                 <span class="pill">Advanced</span>
               </div>
               <p class="course-desc">Supervised learning, evaluation, and real-world datasets (coming soon).</p>
             </div>
             <div class="course-actions">
-              <button class="btn-premium-ghost" disabled style="width:100%; opacity:.6; cursor:not-allowed;">Notify
-                me</button>
+              <a class="btn-premium-primary" href="#">Open</a>
+              <a class="btn-premium-ghost" href="#">Syllabus</a>
             </div>
             <div class="progress-container">
               <div class="progress-info"><span>Progress</span><span>0%</span></div>
@@ -358,14 +349,12 @@
         courses.forEach((course) => {
           // Random progress for demo purposes
           const progress = Math.floor(Math.random() * 80) + 5;
-          const iconChar = course.title.charAt(0);
 
           const card = document.createElement("div");
           card.className = "course-card";
           card.innerHTML = `
-              <div class="course-icon-box">${iconChar}</div>
               <div>
-                <div style="display:flex; justify-content:space-between; align-items:start;">
+                <div class="course-header-row">
                   <h3 class="course-title">${course.title}</h3>
                   <span class="pill">${course.pill || "Beginner"}</span>
                 </div>

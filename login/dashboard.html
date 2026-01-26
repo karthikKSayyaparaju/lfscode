@@ -17,6 +17,15 @@
   <!-- Small extra CSS only for the courses scroller (does not change your bg color) -->
 
   <style>
+    /* --- New Premium Dashboard Styles --- */
+    body {
+      /* Soft mesh gradient background */
+      background-color: #f8fafc;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 40%) !important;
+    }
+
     /* Splash Screen Styles */
     #splash-screen {
       position: fixed;
@@ -43,6 +52,157 @@
     .fade-out {
       opacity: 0;
       pointer-events: none;
+    }
+
+    /* Premium Course Card */
+    .course-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 24px;
+      /* Large radius */
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+      /* Soft shadow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 320px;
+      position: relative;
+      overflow: visible;
+      /* Allow icon to float */
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      /* Lift animation */
+      box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.15);
+      /* Deepen shadow */
+    }
+
+    /* Floating Icon */
+    .course-icon-box {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #ffffff, #f3f4f6);
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      margin-bottom: 16px;
+    }
+
+    .course-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 8px 0;
+    }
+
+    .course-desc {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    /* Buttons */
+    .course-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn-premium-primary {
+      background: #3b82f6;
+      /* Brand blue */
+      color: white;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-premium-primary:hover {
+      background: #2563eb;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-premium-ghost {
+      background: #f3f4f6;
+      /* Light gray */
+      color: #4b5563;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-premium-ghost:hover {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      border-top: 1px solid #f1f5f9;
+      padding-top: 16px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #10b981;
+      border-radius: 999px;
+      width: 0%;
+      transition: width 1s ease-out;
+    }
+
+    /* Section Header Tweaks */
+    .section h2 {
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chevron-right {
+      width: 24px;
+      height: 24px;
+      background: #e2e8f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #475569;
     }
   </style>
 </head>
@@ -81,43 +241,71 @@
 
       <!-- ✅ Courses Scroller -->
       <section class="section" aria-label="Courses">
-        <h2>Courses</h2>
+        <h2>Courses <span class="chevron-right">›</span></h2>
         <p class="sub">Swipe/scroll horizontally to explore.</p>
 
         <div class="course-row" id="courseRow">
           <!-- Filled by JS (but has fallback static cards too) -->
           <div class="course-card">
-            <div class="course-top">
-              <h3>Basic Python</h3>
-              <span class="pill">Start</span>
+            <div class="course-icon-box">🐍</div>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:start;">
+                <h3 class="course-title">Basic Python</h3>
+                <span class="pill">Beginner</span>
+              </div>
+              <p class="course-desc">Syntax, loops, functions, I/O, and fundamentals with quick checks.</p>
             </div>
-            <p class="course-desc">Syntax, loops, functions, I/O, and fundamentals with quick checks.</p>
             <div class="course-actions">
-              <a class="mini-btn primary" href="/login/courses.html">Open</a>
-              <a class="mini-btn" href="/login/syllabus.html?course=python">Syllabus</a>
+              <a class="btn-premium-primary" href="/login/courses.html">Open</a>
+              <a class="btn-premium-ghost" href="/login/syllabus.html?course=python">Syllabus</a>
+            </div>
+            <div class="progress-container">
+              <div class="progress-info"><span>Progress</span><span>12%</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width:12%"></div>
+              </div>
             </div>
           </div>
 
           <div class="course-card">
-            <div class="course-top">
-              <h3>Data Structures</h3>
-              <span class="pill">Start</span>
+            <div class="course-icon-box">🏗️</div>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:start;">
+                <h3 class="course-title">Data Structures</h3>
+                <span class="pill">Intermediate</span>
+              </div>
+              <p class="course-desc">Arrays, stacks, queues, linked lists, trees, graphs + problem sets.</p>
             </div>
-            <p class="course-desc">Arrays, stacks, queues, linked lists, trees, graphs + problem sets.</p>
             <div class="course-actions">
-              <a class="mini-btn primary" href="#">Open</a>
-              <a class="mini-btn" href="/login/syllabus.html?course=DataStructures">Syllabus</a>
+              <a class="btn-premium-primary" href="#">Open</a>
+              <a class="btn-premium-ghost" href="/login/syllabus.html?course=DataStructures">Syllabus</a>
+            </div>
+            <div class="progress-container">
+              <div class="progress-info"><span>Progress</span><span>45%</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width:45%"></div>
+              </div>
             </div>
           </div>
 
           <div class="course-card">
-            <div class="course-top">
-              <h3>Machine Learning</h3>
-              <span class="pill">Coming soon</span>
+            <div class="course-icon-box">🤖</div>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:start;">
+                <h3 class="course-title">Machine Learning</h3>
+                <span class="pill">Advanced</span>
+              </div>
+              <p class="course-desc">Supervised learning, evaluation, and real-world datasets (coming soon).</p>
             </div>
-            <p class="course-desc">Supervised learning, evaluation, and real-world datasets (coming soon).</p>
             <div class="course-actions">
-              <button class="mini-btn" disabled style="opacity:.6; cursor:not-allowed;">Notify me</button>
+              <button class="btn-premium-ghost" disabled style="width:100%; opacity:.6; cursor:not-allowed;">Notify
+                me</button>
+            </div>
+            <div class="progress-container">
+              <div class="progress-info"><span>Progress</span><span>0%</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width:0%"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -140,17 +328,28 @@
         if (!res.ok) throw new Error("courses load failed");
         const { courses = [] } = await res.json();
         courses.forEach((course) => {
+          // Random progress for demo purposes
+          const progress = Math.floor(Math.random() * 80) + 5;
+          const iconChar = course.title.charAt(0);
+
           const card = document.createElement("div");
           card.className = "course-card";
           card.innerHTML = `
-              <div class="course-top">
-                <h3 class="course-title">${course.title}</h3>
-                <span class="pill">${course.pill || "Start"}</span>
+              <div class="course-icon-box">${iconChar}</div>
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                  <h3 class="course-title">${course.title}</h3>
+                  <span class="pill">${course.pill || "Beginner"}</span>
+                </div>
+                <p class="course-desc">${course.summary || ""}</p>
               </div>
-              <p class="course-desc">${course.summary || ""}</p>
               <div class="course-actions">
-                <a class="mini-btn primary" href="${course.cta}">Open</a>
-                <a class="mini-btn" href="${course.syllabusPage || course.topicPage || course.cta}">Syllabus</a>
+                <a class="btn-premium-primary" href="${course.cta}">Open</a>
+                <a class="btn-premium-ghost" href="${course.syllabusPage || course.topicPage || course.cta}">Syllabus</a>
+              </div>
+              <div class="progress-container">
+                <div class="progress-info"><span>Progress</span><span>${progress}%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div>
               </div>
             `;
           row.appendChild(card);

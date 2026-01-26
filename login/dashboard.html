@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
   <!-- Your existing CSS (unchanged) -->
   <link rel="stylesheet" href="/styles.css" />
@@ -268,6 +269,12 @@
       /* Push links to the right */
       margin-right: 32px;
     }
+
+    /* AI Font Style for Welcome Header */
+    #welcome-header {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.03em;
+    }
   </style>
 </head>
 
@@ -303,7 +310,7 @@
   <main class="hero">
     <div class="container hero-inner">
       <div>
-        <h1>
+        <h1 id="welcome-header">
           Welcome back 👋
         </h1>
         <p style="margin:0; font-weight:600; opacity:.85;">

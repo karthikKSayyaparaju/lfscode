@@ -28,6 +28,7 @@
       align-items: center;
       z-index: 9999;
       transition: opacity 1s ease-out;
+      opacity: 1;
     }
 
     #splash-text {
@@ -64,7 +65,7 @@
       </button>
 
       <nav class="nav-links" id="navLinks">
-        <a href="#">Product_</a>
+        <a href="#">Product</a>
         <a href="#">Solutions</a>
         <a href="#">Resources</a>
         <a href="#">Pricing</a>
@@ -437,20 +438,20 @@
 
   <script src="script.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('load', () => {
       const splash = document.getElementById('splash-screen');
 
-      // Keep splash screen visible for 2 seconds (2000ms)
-      setTimeout(() => {
-        // Start the fade out
-        splash.classList.add('fade-out');
+      if (splash) {
+        setTimeout(() => {
+          splash.classList.add('fade-out');
 
-        // Remove the element from the DOM completely after the transition ends
-        // This ensures it doesn't block interaction or take up memory
-        splash.addEventListener('transitionend', () => {
-          splash.remove();
-        });
-      }, 2000);
+          // Ensure removal even if transition event fails
+          const cleanup = () => { if (splash.parentNode) splash.remove(); };
+
+          splash.addEventListener('transitionend', cleanup);
+          setTimeout(cleanup, 1100); // Backup timer
+        }, 2000);
+      }
     });
   </script>
 </body>

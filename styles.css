@@ -13,6 +13,9 @@
   /* green */
   --btn: #0b0f1a;
   /* near-black */
+  --bg-card: #ffffff;
+  --bg-muted: #f1f5f9;
+  --bg-header: rgba(255, 255, 255, 0.95);
   --bg-pattern:
     radial-gradient(circle 120px at 12% 18%, rgba(22, 163, 74, 0.08), transparent 55%),
     radial-gradient(circle 90px at 82% 12%, rgba(14, 116, 144, 0.09), transparent 50%),
@@ -20,6 +23,22 @@
     linear-gradient(45deg, transparent 0 64%, rgba(22, 163, 74, 0.10) 64% 72%, transparent 72%),
     linear-gradient(180deg, transparent 0 78%, rgba(15, 23, 42, 0.05) 78% 88%, transparent 88%),
     radial-gradient(circle 150px at 60% 96%, rgba(15, 23, 42, 0.05), transparent 60%);
+}
+
+background-color: var(--bg);
+background-image: var(--bg-pattern);
+
+body.dark-mode {
+  --bg: #020617;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --border: #1e293b;
+  --accent: #4ade80;
+  --btn: #3b82f6;
+  --bg-card: #0f172a;
+  --bg-muted: #1e293b;
+  --bg-header: rgba(15, 23, 42, 0.9);
+  --bg-pattern: radial-gradient(circle at 50% 50%, #1e293b 1px, transparent 1px);
 }
 
 * {
@@ -37,6 +56,7 @@ body {
   color: var(--text);
   background-color: var(--bg);
   background-image: var(--bg-pattern);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1 {
@@ -73,10 +93,11 @@ a {
 .topbar {
   position: sticky;
   top: 0;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--bg-header);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
   z-index: 50;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav {
@@ -113,7 +134,7 @@ a {
   align-items: center;
   gap: 22px;
   font-size: 14px;
-  color: #111827;
+  color: var(--text);
 }
 
 .nav-links a {
@@ -179,7 +200,7 @@ a {
   font-size: 14px;
   font-weight: 300;
   border: 1px solid transparent;
-  transition: transform 0.05s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform 0.05s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   white-space: pre-line;
   cursor: pointer;
 }
@@ -189,9 +210,9 @@ a {
 }
 
 .btn-outline {
-  background: #fff;
-  border-color: var(--border);
-  color: #0b1220;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
 }
 
 .btn-outline:hover {
@@ -234,7 +255,7 @@ a {
   letter-spacing: -0.04em;
   line-height: 1.1;
   font-size: clamp(5px, 3vw, 37px);
-  color: #0f172a;
+  color: var(--text);
 }
 
 /* To match your screenshot where "Become" is green */
@@ -266,7 +287,7 @@ a {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  color: #111827;
+  color: var(--text);
   opacity: 0.9;
 }
 
@@ -282,9 +303,10 @@ a {
 }
 
 .muted-block {
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--bg-muted);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .reading-column {
@@ -332,7 +354,7 @@ a {
   padding: 18px 20px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--bg-card);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
 }
 
@@ -346,8 +368,14 @@ a {
   border-radius: 16px;
   padding: 18px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--bg-card);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.pillar-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.1);
 }
 
 .pillar-card h3 {
@@ -376,11 +404,17 @@ a {
 }
 
 .chapter-card {
-  padding: 16px;
-  border-radius: 14px;
+  padding: 18px;
+  border-radius: 16px;
   border: 1px solid var(--border);
-  background: #fff;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+  background: var(--bg-card);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.chapter-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.1);
 }
 
 .chapter-card h4 {
@@ -402,11 +436,17 @@ a {
 }
 
 .tech-card {
-  padding: 16px;
-  border-radius: 14px;
+  padding: 18px;
+  border-radius: 16px;
   border: 1px solid var(--border);
-  background: #fff;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+  background: var(--bg-card);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.1);
 }
 
 .tech-card h4 {
@@ -427,10 +467,16 @@ a {
 
 .roadmap-step {
   padding: 18px;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid var(--border);
-  background: #fff;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  background: var(--bg-card);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.roadmap-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.1);
 }
 
 .step-head {
@@ -504,11 +550,17 @@ a {
   padding: 18px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--bg-card);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   gap: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.structure-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.1);
 }
 
 .structure-label {
@@ -589,7 +641,7 @@ a {
   padding: 16px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--bg-card);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
 }
 
@@ -620,7 +672,7 @@ a {
   padding: 18px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--bg-card);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
 }
 
@@ -681,7 +733,7 @@ a {
 .hamburger {
   display: none;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 10px;
   padding: 10px 12px;
   font-size: 18px;
@@ -730,25 +782,19 @@ a {
   }
 }
 
-/* =========================================================
-   LOGIN PAGE (ADD ONLY) — does not change existing site UI
-   Works with your current HTML:
-   body.login-page
-   .container, form, inputs, .btn, .btn-solid, .btn-outline
-   ========================================================= */
+LOGIN PAGE (ADD ONLY) — does not change existing site UI Works with your current HTML: body.login-page .container,
+form,
+inputs,
+.btn,
+.btn-solid,
+.btn-outline=========================================================*/ display: grid;
+place-items: center;
+padding: 28px 16px;
 
-/* Make login page centered with a nice background */
-
-body.login-page {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 28px 16px;
-
-  background-color: #f8fafc;
-  background-image: var(--bg-pattern);
-  color: #000000;
-  /* ✅ ALL text black */
+background-color: #f8fafc;
+background-image: var(--bg-pattern);
+color: #000000;
+/* ✅ ALL text black */
 }
 
 body.login-page .go-home {
@@ -767,7 +813,7 @@ body.login-page .container {
 
   /* card style */
   background: rgba(255, 255, 255, 0.92);
-  color: var(--text);
+  color: #0f172a;
   border: 1px solid rgba(0, 5, 16, 0.14);
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.35),
@@ -780,7 +826,7 @@ body.login-page h2 {
   margin: 0;
   font-family: 'Open Sans', sans-serif !important;
   /* Forces the font */
-  font-weight: 200;
+  font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 1.1;
   font-size: clamp(10px, 6vw, 74px);
@@ -801,7 +847,8 @@ body.login-page input[type="password"] {
   border-radius: 12px;
   border: 1px solid rgba(15, 23, 42, 0.18);
   outline: none;
-  background: #fff;
+  background: var(--bg-card);
+  color: var(--text);
   font-size: 14px;
   transition: 180ms ease;
 }
@@ -862,7 +909,7 @@ body.login-page a.btn img {
   right: 0;
   top: 48px;
   min-width: 220px;
-  background: #fff;
+  background: var(--bg-card);
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
@@ -901,13 +948,13 @@ body.login-page a.btn img {
 .profile-menu a {
   display: block;
   text-decoration: none;
-  color: #0f172a;
+  color: var(--text);
   border-radius: 8px;
   padding: 8px 10px;
 }
 
 .profile-menu a:hover {
-  background: #f1f5f9;
+  background: var(--bg-muted);
 }
 
 
@@ -955,7 +1002,7 @@ body.login-page a.btn img {
   border-radius: 16px;
   padding: 16px;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--bg-card);
   backdrop-filter: blur(6px);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
   display: flex;
@@ -1030,7 +1077,6 @@ body.login-page a.btn img {
 }
 
 
-/* --- Courses Page --- */
 
 body {
   background-color: #f8fafc;
@@ -1045,12 +1091,13 @@ body {
 }
 
 .rail {
-  background: #fff;
+  background: var(--bg-card);
   border: 1px solid #e2e8f0;
   border-radius: 18px;
   padding: 18px;
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
   position: sticky;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
   top: 90px;
   align-self: start;
 }
@@ -1083,12 +1130,13 @@ body {
 }
 
 .topics {
-  background: #fff;
+  background: var(--bg-card);
   border: 1px solid #e2e8f0;
   border-radius: 18px;
   padding: 18px;
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
   min-height: 60vh;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .topics h2 {
@@ -1103,9 +1151,9 @@ body {
   padding: 14px;
   border-radius: 14px;
   border: 1px solid #e2e8f0;
-  background: #fff;
+  background: var(--bg-card);
   margin-bottom: 10px;
-  transition: transform 120ms ease, box-shadow 160ms ease;
+  transition: transform 120ms ease, box-shadow 160ms ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .topic-card:hover {
@@ -1138,12 +1186,13 @@ body {
 }
 
 .right-rail {
-  background: #fff;
+  background: var(--bg-card);
   border: 1px solid #e2e8f0;
   border-radius: 18px;
   padding: 18px;
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
   min-height: 240px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 @media (max-width: 1100px) {
@@ -1160,7 +1209,6 @@ body {
 /* --- Force Multiplier Grid --- */
 .force-section {
   padding: 80px 0;
-  background: #fff;
 }
 
 .force-header {
@@ -1232,9 +1280,9 @@ input:checked+.slider:before {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 24px;
-  transition: 0.3s;
+  transition: 0.3s ease;
   position: relative;
-  background: #fff;
+  background: var(--bg-card);
 }
 
 .force-card:hover {
@@ -1253,7 +1301,7 @@ input:checked+.slider:before {
   display: inline-block;
   padding: 10px;
   border-radius: 12px;
-  background: #f1f5f9;
+  background: var(--bg-muted);
 }
 
 .neon-border .force-icon {
@@ -1307,7 +1355,6 @@ input:checked+.slider:before {
 /* --- Bento Curriculum --- */
 .bento-section {
   padding: 80px 0;
-  background: #f8fafc;
 }
 
 .bento-grid {
@@ -1320,13 +1367,13 @@ input:checked+.slider:before {
 }
 
 .bento-card {
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 24px;
   padding: 24px;
   border: 1px solid var(--border);
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1349,7 +1396,7 @@ input:checked+.slider:before {
 .bento-wide {
   grid-column: 2 / 4;
   grid-row: 1 / 2;
-  background: #fff;
+  background: var(--bg-card);
 }
 
 .bento-small {
@@ -1391,7 +1438,6 @@ input:checked+.slider:before {
 /* --- Comparison Slider --- */
 .comp-section {
   padding: 80px 0;
-  background: #fff;
 }
 
 .comp-wrapper {
@@ -1416,13 +1462,14 @@ input:checked+.slider:before {
 }
 
 .comp-bottom {
-  background: #f8fafc;
-  color: #64748b;
+  background: var(--bg-muted);
+  color: var(--muted);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px;
   text-align: center;
+  transition: background-color 0.3s ease;
 }
 
 .comp-top {
@@ -1493,4 +1540,63 @@ input:checked+.slider:before {
   color: #fff;
   pointer-events: none;
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+/* --- Scroll Animation --- */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Cascading Cards Animation --- */
+.fade-in-section .pillar-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.fade-in-section.is-visible .pillar-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-section.is-visible .pillar-card:nth-child(1) {
+  transition-delay: 0.2s;
+}
+
+.fade-in-section.is-visible .pillar-card:nth-child(2) {
+  transition-delay: 0.4s;
+}
+
+.fade-in-section.is-visible .pillar-card:nth-child(3) {
+  transition-delay: 0.6s;
+}
+
+/* Hover effect override for visible cards in animated section */
+.fade-in-section.is-visible .pillar-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition-delay: 0s;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

@@ -784,121 +784,195 @@ a {
   }
 }
 
-LOGIN PAGE (ADD ONLY) — does not change existing site UI Works with your current HTML: body.login-page .container,
-form,
-inputs,
-.btn,
-.btn-solid,
-.btn-outline=========================================================*/ display: grid;
-place-items: center;
-padding: 28px 16px;
-
-background-color: #f8fafc;
-background-image: var(--bg-pattern);
-color: #000000;
-/* ✅ ALL text black */
+/* --- Login Page Refactor (50/50 Split) --- */
+body.login-page {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg);
 }
 
 body.login-page .go-home {
   position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 10;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+  width: auto;
+  font-size: 24px;
+  padding: 6px 12px;
+  transform: scale(0.5);
+  transform-origin: top right;
 }
 
-/* Your existing .container is max 1120px; for login we want a card width */
-body.login-page .container {
-  width: min(460px, 92vw);
-  margin: 0 auto;
-  padding: 26px;
-  border-radius: 18px;
-
-  /* card style */
-  background: rgba(255, 255, 255, 0.92);
-  color: #0f172a;
-  border: 1px solid rgba(0, 5, 16, 0.14);
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.35),
-    0 2px 10px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(10px);
+/* Left Side: Form */
+.login-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #f8fafc;
+  background-image: var(--bg-pattern);
+  padding: 20px;
 }
 
-/* Login title */
+.login-left .container {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 24px;
+  /* Glassmorphism */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Elements Styling */
 body.login-page h2 {
-  margin: 0;
-  font-family: 'Open Sans', sans-serif !important;
-  /* Forces the font */
-  font-weight: 400;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  font-size: clamp(10px, 6vw, 74px);
+  margin: 0 0 24px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
   color: #0f172a;
+  text-align: center;
 }
 
-/* Form layout */
 body.login-page form {
   display: grid;
-  gap: 12px;
+  gap: 16px;
 }
 
-/* Inputs styling (only on login page) */
 body.login-page input[type="text"],
 body.login-page input[type="password"] {
   width: 100%;
-  padding: 12px 12px;
+  padding: 14px;
   border-radius: 12px;
-  border: 1px solid rgba(15, 23, 42, 0.18);
-  outline: none;
-  background: var(--bg-card);
-  color: var(--text);
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  background: rgba(255, 255, 255, 0.8);
   font-size: 14px;
-  transition: 180ms ease;
-}
-
-body.login-page input::placeholder {
-  color: #94a3b8;
+  transition: all 0.2s ease;
 }
 
 body.login-page input:focus {
-  border-color: rgba(22, 163, 74, 0.55);
-  /* uses your green accent */
-  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.18);
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
+  background: #fff;
 }
 
-/* Button polish (still uses your existing .btn / .btn-solid / .btn-outline) */
 body.login-page .btn {
+  width: 40%;
+  padding: 12px;
   border-radius: 12px;
-  padding: 12px 14px;
+  font-weight: 600;
+  justify-content: center;
+  gap: 10px;
 }
 
-/* Keep your solid button behavior but make it look richer on login */
 body.login-page .btn-solid {
-  background: linear-gradient(135deg, #0b0f1a, #111827);
-  box-shadow: 0 14px 26px rgba(2, 6, 23, 0.25);
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
 }
 
 body.login-page .btn-solid:hover {
-  box-shadow: 0 18px 34px rgba(2, 6, 23, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.25);
 }
 
-/* Google button row (your anchor with .btn-outline) */
-body.login-page a.btn.btn-outline {
-  gap: 10px;
-  justify-content: center;
-}
-
-/* HR + divider */
 body.login-page hr {
-  border: none;
+  margin: 24px 0;
+  border: 0;
   height: 1px;
-  background: rgba(15, 23, 42, 0.14);
-  margin: 16px 0;
+  background: rgba(15, 23, 42, 0.1);
 }
 
-/* Make the google icon align nicely */
 body.login-page a.btn img {
   display: inline-block;
   vertical-align: middle;
+}
+
+/* Right Side: AI/ML Info Panel */
+.login-right {
+  background-color: #0f172a;
+  /* Deep slate-blue */
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  font-family: 'Courier New', Courier, monospace;
+  /* Monospaced */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Staggered Animation Elements */
+.login-right .info-icon,
+.login-right .info-title,
+.login-right .info-desc,
+.login-right .info-graphic {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.login-right .info-icon {
+  animation-delay: 0.2s;
+}
+
+.login-right .info-title {
+  animation-delay: 0.5s;
+}
+
+.login-right .info-desc {
+  animation-delay: 0.8s;
+}
+
+.login-right .info-graphic {
+  animation-delay: 1.1s;
+}
+
+.login-right .info-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #170707;
+  margin: 24px 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.login-right .info-desc {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #94a3b8;
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Stack */
+@media (max-width: 768px) {
+  body.login-page {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .login-right {
+    display: none;
+  }
 }
 
 

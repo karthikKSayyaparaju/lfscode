@@ -31,7 +31,7 @@
       align-items: flex-start !important;
       display: flex;
       flex-direction: column;
-      padding-top: 100px;
+      padding: 100px 0 20px;
       /* More breathing room */
     }
 
@@ -65,7 +65,7 @@
     }
 
     .btn-solid {
-      background-color: #3b82f6 !important;
+      background: linear-gradient(135deg, #2563eb 0%, #9333ea 50%, #db2777 100%) !important;
       /* Bright Blue */
       box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5), 0 2px 4px -1px rgba(59, 130, 246, 0.3) !important;
       transition: all 0.3s ease !important;
@@ -81,14 +81,14 @@
     .ticker-wrap {
       width: 100%;
       overflow: hidden;
-      margin-top: 80px;
+      margin-top: 20px;
       mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
       -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     }
 
     .ticker-track {
       display: flex;
-      gap: 20px;
+      gap: 10px;
       /* Requested gap */
       width: max-content;
       animation: scroll 30s linear infinite;
@@ -102,7 +102,7 @@
       color: var(--muted);
       font-size: 1rem;
       white-space: nowrap;
-      padding: 0 10px;
+      padding: 0 4px;
     }
 
     .ticker-icon {
@@ -704,7 +704,7 @@
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
+      if (window.scrollY > 150) {
         scrollToTopBtn.classList.add('show');
       } else {
         scrollToTopBtn.classList.remove('show');

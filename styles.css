@@ -813,7 +813,7 @@ body.login-page {
   max-width: 420px;
   padding: 48px;
   position: absolute;
-  top: 20%;
+  top: 0%;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -824,9 +824,6 @@ body.login-page {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s ease-out forwards;
 }
 
 /* Header inside Login */
@@ -1008,47 +1005,6 @@ body.login-page .footer {
   text-align: center;
   font-size: 14px;
   color: var(--muted);
-}
-
-/* Staggered Form Animation */
-.login-left .header,
-.login-left .form>*,
-.login-left .divider,
-.login-left .btn-google,
-.login-left .footer {
-  animation: fadeInUpStagger 0.5s ease-out backwards;
-}
-
-.login-left .header {
-  animation-delay: 0.2s;
-}
-
-.login-left .form>*:nth-child(1) {
-  animation-delay: 0.3s;
-}
-
-.login-left .form>*:nth-child(2) {
-  animation-delay: 0.4s;
-}
-
-.login-left .form>*:nth-child(3) {
-  animation-delay: 0.5s;
-}
-
-.login-left .form>*:nth-child(4) {
-  animation-delay: 0.6s;
-}
-
-.login-left .divider {
-  animation-delay: 0.7s;
-}
-
-.login-left .btn-google {
-  animation-delay: 0.8s;
-}
-
-.login-left .footer {
-  animation-delay: 0.9s;
 }
 
 @keyframes fadeInUpStagger {

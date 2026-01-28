@@ -33,39 +33,15 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 0.5s ease-out;
+      transition: background-color 0.4s ease-out;
       opacity: 1;
     }
 
     #splash-content {
       z-index: 2;
-      font-family: 'Cinzel', serif;
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #0f172a;
       display: flex;
       align-items: center;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 4px;
-      height: 1.2em;
-      background-color: #0f172a;
-      margin-left: 6px;
-      animation: blink 1s step-end infinite;
-    }
-
-    @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0;
-      }
+      transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.3s ease-in 0.3s;
     }
 
     .blueprint-lines {
@@ -92,9 +68,20 @@
       stroke-dashoffset: 0;
     }
 
-    .fade-out {
-      opacity: 0;
+    /* Zoom Effect */
+    .zoom-active {
+      background-color: transparent !important;
       pointer-events: none;
+    }
+
+    .zoom-active #splash-content {
+      transform: scale(50);
+      opacity: 0;
+    }
+
+    .zoom-active .blueprint-lines {
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     /* Premium Course Card */
@@ -282,7 +269,19 @@
   <!-- Splash Screen Container -->
   <div id="splash-screen">
     <div id="splash-content">
-      <span id="type-text"></span><span class="cursor"></span>
+      <svg class="splash-icon" xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
+        style="animation: pulseBrain 2s infinite ease-in-out;">
+        <defs>
+          <linearGradient id="brain-gradient-splash" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#818cf8;" />
+            <stop offset="100%" style="stop-color:#6366f1;" />
+          </linearGradient>
+        </defs>
+        <path fill="url(#brain-gradient-splash)" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"
+          d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
+        <path fill="url(#brain-gradient-splash)" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"
+          d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
+      </svg>
     </div>
     <svg class="blueprint-lines" xmlns="http://www.w3.org/2000/svg">
       <line class="blueprint-line" x1="0" y1="100%" x2="100%" y2="0" />
@@ -323,7 +322,18 @@
       </a>
       <nav class="nav-links" id="navLinks"></nav>
       <div class="nav-actions" id="navActions">
-        <div id="profileAvatar" class="profile-avatar"></div>
+        <div class="profile">
+          <div id="profileAvatar" class="profile-avatar"></div>
+          <ul id="profileMenu" class="profile-menu" hidden>
+            <li class="profile-header" id="profileName">User</li>
+            <li class="profile-sub" id="profileEmail">user@example.com</li>
+            <li class="divider"></li>
+            <li><a href="/login/profile.html">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li class="divider"></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </header>
@@ -458,31 +468,20 @@
 
     window.addEventListener('load', () => {
       const splash = document.getElementById('splash-screen');
-      const typeText = document.getElementById('type-text');
       const lines = document.querySelector('.blueprint-lines');
-      const text = "WELCOME";
-      let i = 0;
 
-      function typeWriter() {
-        if (i < text.length) {
-          typeText.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typeWriter, 30);
-        } else {
-          // Typing done, draw lines
-          if (lines) lines.classList.add('draw');
+      // Start lines animation
+      setTimeout(() => {
+        if (lines) lines.classList.add('draw');
+      }, 100);
 
-          // Fade out after lines draw
-          setTimeout(() => {
-            if (splash) {
-              splash.classList.add('fade-out');
-              setTimeout(() => { if (splash.parentNode) splash.remove(); }, 500);
-            }
-          }, 900);
+      // Fade out after delay
+      setTimeout(() => {
+        if (splash) {
+          splash.classList.add('zoom-active');
+          setTimeout(() => { if (splash.parentNode) splash.remove(); }, 350);
         }
-      }
-
-      setTimeout(typeWriter, 300);
+      }, 400);
     });
   </script>
 </body>

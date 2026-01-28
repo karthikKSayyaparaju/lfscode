@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
   <style>
-    body { background-color: #f8fafc; }
+    body {
+      background-color: #f8fafc;
+    }
+
     .topic-shell {
       display: grid;
       grid-template-columns: 420px 1fr;
@@ -17,20 +21,34 @@
       padding: 18px 0 60px;
       align-items: start;
     }
+
     .card {
       background: #fff;
       border: 1px solid #e2e8f0;
       border-radius: 18px;
       padding: 18px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
     }
-    .topic-name { margin:0 0 6px; font-weight: 400; font-size: 24px; }
-    .topic-sub { margin:0 0 12px; opacity:.82; font-weight:300; font-family: 'Open Sans', sans-serif; }
+
+    .topic-name {
+      margin: 0 0 6px;
+      font-weight: 400;
+      font-size: 24px;
+    }
+
+    .topic-sub {
+      margin: 0 0 12px;
+      opacity: .82;
+      font-weight: 300;
+      font-family: 'Open Sans', sans-serif;
+    }
+
     .code-panel {
       min-height: 60vh;
       display: grid;
       gap: 10px;
     }
+
     .topic-meta {
       display: flex;
       gap: 8px;
@@ -38,6 +56,7 @@
       flex-wrap: wrap;
       margin: 0 0 10px;
     }
+
     .meta-pill {
       padding: 6px 10px;
       border-radius: 999px;
@@ -48,15 +67,34 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
-    .difficulty-easy { background: #dcfce7; color: #166534; }
-    .difficulty-med { background: #fef9c3; color: #854d0e; }
-    .difficulty-hard { background: #fee2e2; color: #991b1b; }
-    .topic-body { margin: 0 0 12px; opacity: 0.9; line-height: 1.5; }
+
+    .difficulty-easy {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .difficulty-med {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .difficulty-hard {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .topic-body {
+      margin: 0 0 12px;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
     .detail-section {
       border-top: 1px dashed #e2e8f0;
       padding-top: 12px;
       margin-top: 12px;
     }
+
     .section-label {
       margin: 0 0 6px;
       font-weight: 600;
@@ -65,7 +103,9 @@
       text-transform: uppercase;
       opacity: 0.65;
     }
-    .inline-sample, pre.inline-sample {
+
+    .inline-sample,
+    pre.inline-sample {
       background: #0b1220;
       color: #e2e8f0;
       border-radius: 10px;
@@ -75,6 +115,7 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       border: 1px solid #111827;
     }
+
     .bullet-list {
       margin: 0;
       padding-left: 18px;
@@ -83,6 +124,7 @@
       gap: 6px;
       font-weight: 300;
     }
+
     .notes-body {
       margin: 0;
       white-space: pre-wrap;
@@ -90,7 +132,11 @@
       opacity: 0.92;
       font-weight: 300;
     }
-    .is-hidden { display: none !important; }
+
+    .is-hidden {
+      display: none !important;
+    }
+
     textarea.code-input {
       width: 100%;
       min-height: 220px;
@@ -99,7 +145,9 @@
       border-radius: 12px;
       border: 1px solid #e2e8f0;
     }
-    pre.output, pre.solution-view {
+
+    pre.output,
+    pre.solution-view {
       background: #0b1220;
       color: #e2e8f0;
       border-radius: 12px;
@@ -108,7 +156,13 @@
       overflow: auto;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
-    .pill-row { display:flex; gap:8px; flex-wrap:wrap; }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
     .pill-btn {
       padding: 8px 12px;
       border-radius: 999px;
@@ -117,11 +171,13 @@
       font-weight: 300;
       cursor: pointer;
     }
+
     .pill-btn.active {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
     }
+
     .challenge-link {
       background: transparent;
       border: none;
@@ -132,7 +188,11 @@
       text-underline-offset: 3px;
       cursor: pointer;
     }
-    .challenge-link:hover { color: var(--accent); }
+
+    .challenge-link:hover {
+      color: var(--accent);
+    }
+
     .challenge-banner {
       border: 1px dashed #e2e8f0;
       border-radius: 12px;
@@ -140,13 +200,27 @@
       background: #f8fafc;
       margin: 8px 0;
     }
-    .challenge-banner h4 { margin: 0 0 4px; font-weight: 600; font-size: 14px; }
-    .challenge-banner p { margin: 0; opacity: 0.86; font-weight: 300; }
+
+    .challenge-banner h4 {
+      margin: 0 0 4px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .challenge-banner p {
+      margin: 0;
+      opacity: 0.86;
+      font-weight: 300;
+    }
+
     @media (max-width: 1024px) {
-      .topic-shell { grid-template-columns: 1fr; }
+      .topic-shell {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
   <script>
     window.__HEADER_CONFIG__ = {
@@ -492,4 +566,5 @@
     });
   </script>
 </body>
+
 </html>

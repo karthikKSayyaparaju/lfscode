@@ -112,6 +112,17 @@ async function initAuthUI() {
       const avatar = document.getElementById("profileAvatar");
       const user = data.user;
 
+      const welcomeHeader = document.getElementById("welcome-header");
+      if (welcomeHeader && user) {
+        const welcomeName = (
+          user.displayName ||
+          user.name?.givenName ||
+          user.emails?.[0]?.value ||
+          "User"
+        ).trim();
+        welcomeHeader.textContent = `Welcome ${welcomeName} 👋`;
+      }
+
       const menu = document.getElementById("profileMenu");
       const nameEl = document.getElementById("profileName");
       const emailEl = document.getElementById("profileEmail");

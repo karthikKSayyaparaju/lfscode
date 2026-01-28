@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,8 +8,205 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body {
+      background: #f8fafc;
+    }
+
+    .profile-hero {
+      background: linear-gradient(135deg, var(--accent), #15803d);
+      color: #fff;
+      padding: 48px 0 120px;
+    }
+
+    .profile-shell {
+      max-width: 1100px;
+      margin: -80px auto 60px;
+      padding: 0 24px;
+    }
+
+    .profile-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 24px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .profile-avatar-xl {
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
+      background: #e2e8f0;
+      display: grid;
+      place-items: center;
+      font-size: 36px;
+      font-weight: 800;
+      color: #0b1220;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid #fff;
+    }
+
+    .profile-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .profile-subline {
+      margin: 4px 0 0;
+      opacity: 0.8;
+      font-weight: 600;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 420px;
+    }
+
+    .profile-nav {
+      border-right: 1px solid #e2e8f0;
+      padding: 18px;
+      background: linear-gradient(180deg, #f8fafc, #ffffff);
+    }
+
+    .profile-nav button {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      text-align: left;
+      margin-bottom: 10px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .profile-nav button.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
+      transform: translateY(-1px);
+    }
+
+    .profile-nav button:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+    .profile-content {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .info-section {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .info-header {
+      padding: 14px 16px;
+      background: #f8fafc;
+      font-weight: 800;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 200px 1fr 60px;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      gap: 8px;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .info-value {
+      color: #1f2937;
+      font-weight: 600;
+      min-height: 20px;
+    }
+
+    .info-empty {
+      color: #94a3b8;
+    }
+
+    .edit-link {
+      color: #0b82f0;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 14px;
+      justify-self: end;
+    }
+
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #075985;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    @media (max-width: 960px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-nav {
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        gap: 10px;
+      }
+
+      .profile-nav button {
+        flex: 1;
+        margin: 0;
+      }
+
+      .info-row {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 4px;
+      }
+
+      .edit-link {
+        justify-self: start;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <script>
     window.__HEADER_CONFIG__ = {
@@ -142,4 +340,5 @@
     document.addEventListener("DOMContentLoaded", populateProfile);
   </script>
 </body>
+
 </html>

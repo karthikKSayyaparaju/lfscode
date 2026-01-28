@@ -94,6 +94,20 @@
     <h2 class="info-title">Master New Skills</h2>
     <p class="info-desc">Join our community and start your journey to becoming a better developer today.</p>
   </div>
+
+  <script>
+    const descElement = document.querySelector('.info-desc');
+    if (descElement) {
+      descElement.addEventListener('animationend', (e) => {
+        if (e.animationName === 'decodeText') {
+          // Note: Ensure you have a sound file at this path
+          const audio = new Audio('/sounds/ding.mp3');
+          audio.volume = 0.4;
+          audio.play().catch(() => { /* Autoplay might be blocked by browser */ });
+        }
+      });
+    }
+  </script>
 </body>
 
 </html>
